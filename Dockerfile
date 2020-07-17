@@ -15,6 +15,6 @@ RUN mkdir pack && tar -xzvf $APPNAME.tar.gz -C pack && cd pack && rm -rf go.mod 
 
 FROM alpine AS production
 WORKDIR /app
-ENV APPNAME manage-data-sender
+ENV APPNAME school-web
 COPY --from=development /go/src/$APPNAME/pack .
 CMD [ "sh", "-c", "./$APPNAME" ]
