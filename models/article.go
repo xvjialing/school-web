@@ -10,49 +10,49 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type User struct {
+type Article struct {
 	Id         int       `orm:"column(id);auto"`
-	Username   string    `orm:"column(username);size(255);null"`
-	Password   string    `orm:"column(password);size(255);null"`
-	Email      string    `orm:"column(email);size(255);null"`
+	Title      string    `orm:"column(title);size(255)"`
+	Subtitle   string    `orm:"column(subtitle);size(255);null"`
+	Content    string    `orm:"column(content)"`
 	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now"`
-	LastLogin  time.Time `orm:"column(last_login);type(timestamp);auto_now"`
-	Phone      string    `orm:"column(phone);size(255);null"`
+	Author     string    `orm:"column(author);size(255)"`
+	Type       int       `orm:"column(type);null"`
 }
 
-func (t *User) TableName() string {
-	return "user"
+func (t *Article) TableName() string {
+	return "article"
 }
 
 func init() {
-	orm.RegisterModel(new(User))
+	orm.RegisterModel(new(Article))
 }
 
-// AddUser insert a new User into database and returns
+// AddArticle insert a new Article into database and returns
 // last inserted Id on success.
-func AddUser(m *User) (id int64, err error) {
+func AddArticle(m *Article) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetUserById retrieves User by Id. Returns error if
+// GetArticleById retrieves Article by Id. Returns error if
 // Id doesn't exist
-func GetUserById(id int) (v *User, err error) {
+func GetArticleById(id int) (v *Article, err error) {
 	o := orm.NewOrm()
-	v = &User{Id: id}
+	v = &Article{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllUser retrieves all User matches certain condition. Returns empty list if
+// GetAllArticle retrieves all Article matches certain condition. Returns empty list if
 // no records exist
-func GetAllUser(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllArticle(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(User))
+	qs := o.QueryTable(new(Article))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -102,7 +102,7 @@ func GetAllUser(query map[string]string, fields []string, sortby []string, order
 		}
 	}
 
-	var l []User
+	var l []Article
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -125,11 +125,11 @@ func GetAllUser(query map[string]string, fields []string, sortby []string, order
 	return nil, err
 }
 
-// UpdateUser updates User by Id and returns error if
+// UpdateArticle updates Article by Id and returns error if
 // the record to be updated doesn't exist
-func UpdateUserById(m *User) (err error) {
+func UpdateArticleById(m *Article) (err error) {
 	o := orm.NewOrm()
-	v := User{Id: m.Id}
+	v := Article{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -140,15 +140,15 @@ func UpdateUserById(m *User) (err error) {
 	return
 }
 
-// DeleteUser deletes User by Id and returns error if
+// DeleteArticle deletes Article by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteUser(id int) (err error) {
+func DeleteArticle(id int) (err error) {
 	o := orm.NewOrm()
-	v := User{Id: id}
+	v := Article{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&User{Id: id}); err == nil {
+		if num, err = o.Delete(&Article{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}
