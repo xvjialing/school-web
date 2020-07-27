@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"school-web/utils"
 	"strings"
 	"time"
 
@@ -31,6 +32,10 @@ func init() {
 // AddUser insert a new User into database and returns
 // last inserted Id on success.
 func AddUser(m *User) (id int64, err error) {
+	m.Password, err = utils.GenerateFromPassword(m.Password)
+	if err != nil {
+		return 0, err
+	}
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
