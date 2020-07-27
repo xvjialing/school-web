@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
+	"log"
 	"reflect"
 	"school-web/utils"
 	"strings"
@@ -39,6 +40,23 @@ func AddUser(m *User) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
+}
+
+func CheckPassword(username, password string) (v *User, err error) {
+	o := orm.NewOrm()
+	user := User{Username: username}
+	err = o.Read(&user)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	equal := utils.CheckPassword(password, user.Password)
+
+	if equal == false {
+		return nil, errors.New("password is wrong")
+	}
+
+	return &user, nil
 }
 
 // GetUserById retrieves User by Id. Returns error if

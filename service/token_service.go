@@ -10,6 +10,9 @@ import (
 	"log"
 	"net/http"
 	"school-web/common"
+	models2 "school-web/models"
+	"strconv"
+	"time"
 )
 
 var Srv *server.Server
@@ -41,7 +44,9 @@ func InitOauth2Service() {
 	Srv.SetClientInfoHandler(server.ClientFormHandler)
 
 	Srv.SetPasswordAuthorizationHandler(func(username, password string) (userID string, err error) {
-		return "1", nil
+
+		user, err := models2.CheckPassword(username, password)
+		return strconv.Itoa(user.Id), err
 	})
 
 	Srv.SetInternalErrorHandler(func(err error) (re *errors.Response) {
@@ -69,6 +74,24 @@ func HandleTokenRequest(s *server.Server, w http.ResponseWriter, r *http.Request
 	}
 
 	return token(s, w, s.GetTokenData(ti), nil)
+}
+
+func ValidationBearerToken(s *server.Server, w http.ResponseWriter, r *http.Request) error {
+
+	token_info, err := s.ValidationBearerToken(r)
+
+	if err != nil {
+		return tokenError(s, w, err)
+	}
+
+	data := map[string]interface{}{
+		"expires_in": int64(token_info.GetAccessCreateAt().Add(token_info.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
+		"client_id":  token_info.GetClientID(),
+		"user_id":    token_info.GetUserID(),
+	}
+
+	return token(s, w, data, nil)
+
 }
 
 func tokenError(s *server.Server, w http.ResponseWriter, err error) error {

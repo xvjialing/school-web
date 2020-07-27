@@ -188,30 +188,23 @@
                 }
             }
         },
-        "/token/info": {
-            "post": {
+        "/file/": {
+            "get": {
                 "tags": [
-                    "token"
-                ]
-            }
-        },
-        "/token/token": {
-            "post": {
-                "tags": [
-                    "token"
+                    "file"
                 ],
-                "description": "GetToken",
-                "operationId": "TokenController.GetToken",
+                "description": "get File",
+                "operationId": "FileController.Get All",
                 "parameters": [
                     {
                         "in": "query",
-                        "name": "grant_type",
-                        "description": "grant_type. e.g. col1:v1,col2:v2 ...",
+                        "name": "query",
+                        "description": "Filter. e.g. col1:v1,col2:v2 ...",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "name": "username",
+                        "name": "fields",
                         "description": "Fields returned. e.g. col1,col2 ...",
                         "type": "string"
                     },
@@ -237,6 +230,349 @@
                         "in": "query",
                         "name": "offset",
                         "description": "Start position of result set. Must be an integer",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "403": {
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "file"
+                ],
+                "description": "create File",
+                "operationId": "FileController.Post",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for File content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "{int} models.File"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/file/{id}": {
+            "get": {
+                "tags": [
+                    "file"
+                ],
+                "description": "get File by id",
+                "operationId": "FileController.Get One",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The key for staticblock",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "file"
+                ],
+                "description": "update the File",
+                "operationId": "FileController.Put",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for File content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "file"
+                ],
+                "description": "delete the File",
+                "operationId": "FileController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "id is empty"
+                    }
+                }
+            }
+        },
+        "/object/": {
+            "get": {
+                "tags": [
+                    "object"
+                ],
+                "description": "get all objects",
+                "operationId": "ObjectController.GetAll",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Object"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "object"
+                ],
+                "description": "create object",
+                "operationId": "ObjectController.Create",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The object content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} models.Object.Id"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/object/{objectId}": {
+            "get": {
+                "tags": [
+                    "object"
+                ],
+                "description": "find object by objectid",
+                "operationId": "ObjectController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "description": "the objectid you want to get",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Object"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "object"
+                ],
+                "description": "update the object",
+                "operationId": "ObjectController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "description": "The objectid you want to update",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Object"
+                        }
+                    },
+                    "403": {
+                        "description": ":objectId is empty"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "object"
+                ],
+                "description": "delete the object",
+                "operationId": "ObjectController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "objectId",
+                        "description": "The objectId you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "objectId is empty"
+                    }
+                }
+            }
+        },
+        "/token/info": {
+            "post": {
+                "tags": [
+                    "token"
+                ],
+                "description": "GetToken",
+                "operationId": "TokenController.GetTokenInfo",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/common.Result"
+                        }
+                    },
+                    "403": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/token/token": {
+            "post": {
+                "tags": [
+                    "token"
+                ],
+                "description": "GetToken",
+                "operationId": "TokenController.GetToken",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "grant_type",
+                        "description": "grant_type: password,refresh_token ...",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "username",
+                        "description": "username",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "password",
+                        "description": "password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "scope",
+                        "description": "read",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "client_id",
+                        "description": "12345",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "client_secret",
+                        "description": "123456",
+                        "required": true,
                         "type": "string"
                     }
                 ],
@@ -428,7 +764,7 @@
         }
     },
     "definitions": {
-        "107.0xc0000d5860.false": {
+        "107.0xc000107c50.false": {
             "title": "false",
             "type": "object"
         },
@@ -441,7 +777,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000d5860.false"
+                    "$ref": "#/definitions/107.0xc000107c50.false"
                 },
                 "msg": {
                     "type": "string"
@@ -473,6 +809,30 @@
                     "type": "string"
                 },
                 "Type": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "models.File": {
+            "title": "File",
+            "type": "object",
+            "properties": {
+                "CreateTime": {
+                    "description": "创建时间",
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Path": {
+                    "description": "路径",
+                    "type": "string"
+                },
+                "Type": {
+                    "description": "文件类型",
                     "type": "integer",
                     "format": "int64"
                 }
@@ -527,12 +887,20 @@
     },
     "tags": [
         {
-            "name": "user",
-            "description": "UserController operations for User\n"
-        },
-        {
             "name": "article",
             "description": "ArticleController operations for Article\n"
+        },
+        {
+            "name": "object",
+            "description": "Operations about object\n"
+        },
+        {
+            "name": "file",
+            "description": "FileController operations for File\n"
+        },
+        {
+            "name": "user",
+            "description": "UserController operations for User\n"
         }
     ]
 }
