@@ -11,7 +11,7 @@ ADD go.sum .
 RUN go mod download
 ADD . .
 RUN bee pack -be GOOS=linux
-RUN mkdir pack && tar -xzvf $APPNAME.tar.gz -C pack && cd pack && rm -rf go.mod go.sum swagger && ls
+RUN mkdir pack && tar -xzvf $APPNAME.tar.gz -C pack && cd pack && rm -rf go.mod go.sum && ls
 
 FROM alpine AS production
 WORKDIR /app
