@@ -15,8 +15,8 @@ RUN mkdir pack && tar -xzvf $APPNAME.tar.gz -C pack && cd pack && rm -rf go.mod 
 
 FROM alpine AS production
 RUN apk add -U tzdata \
-    && ls /usr/share/zoneinfo \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
     && apk del tzdata \
     && date
 WORKDIR /app
