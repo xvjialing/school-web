@@ -22,4 +22,4 @@ RUN apk add -U tzdata \
 WORKDIR /app
 ENV APPNAME school-web
 COPY --from=development /go/src/$APPNAME/pack .
-CMD [ "sh", "-c", "./$APPNAME" ]
+CMD [ "sh", "-c", "date && ./$APPNAME" ]
