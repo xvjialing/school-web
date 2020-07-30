@@ -6,13 +6,11 @@ import (
 	"school-web/models"
 	"strconv"
 	"strings"
-
-	"github.com/astaxie/beego"
 )
 
 // ArticleController operations for Article
 type ArticleController struct {
-	beego.Controller
+	BaseController
 }
 
 // URLMapping ...

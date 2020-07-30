@@ -12,7 +12,7 @@ func GenerateFromPassword(psssword string) (bcryptpwd string, err error) {
 }
 
 func CheckPassword(password, bcryptPassword string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(password), []byte(bcryptPassword))
+	err := bcrypt.CompareHashAndPassword([]byte(bcryptPassword), []byte(password))
 	if err != nil {
 		return false
 	} else {

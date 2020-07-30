@@ -1,14 +1,13 @@
 package main
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/plugins/cors"
+	_ "github.com/go-sql-driver/mysql"
 	"log"
 	_ "school-web/routers"
 	"school-web/service"
-
-	"github.com/astaxie/beego"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func init() {
@@ -32,6 +31,8 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	beegoAppConfig := beego.AppConfig
+
 	orm.RegisterDataBase("default", "mysql", beego.AppConfig.String("sqlconn"))
 
 	if beego.BConfig.RunMode == "dev" {
@@ -39,7 +40,11 @@ func main() {
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
 
-	service.InitOauth2Service()
+	adminUserName := beegoAppConfig.String("AdminUserName")
+	adminUserPassword := beegoAppConfig.String("AdminUserPassword")
+	adminUserEmail := beegoAppConfig.String("AdminUserEmail")
+
+	service.InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail)
 
 	beego.Run()
 }

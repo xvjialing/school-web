@@ -43,9 +43,19 @@ func AddUser(m *User) (id int64, err error) {
 }
 
 func CheckPassword(username, password string) (v *User, err error) {
+
+	//defer func() (v *User, err error) {
+	//	message := recover()
+	//	if message != nil {
+	//		log.Println("panic:", message)
+	//	}
+	//
+	//	return nil, errors.New("err")
+	//}()
+
 	o := orm.NewOrm()
 	user := User{Username: username}
-	err = o.Read(&user)
+	err = o.Read(&user, "username")
 	if err != nil {
 		log.Println(err)
 		return nil, err
@@ -176,4 +186,14 @@ func DeleteUser(id int) (err error) {
 		}
 	}
 	return
+}
+
+func ExistUserByUserName(userName string) (exist bool) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("user")
+	if userName == "" {
+		return false
+	}
+	exist = qs.Filter("username", userName).Exist()
+	return exist
 }

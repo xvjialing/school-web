@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/go-oauth2/oauth2/v4"
 	"github.com/go-oauth2/oauth2/v4/errors"
 	"github.com/go-oauth2/oauth2/v4/manage"
 	"github.com/go-oauth2/oauth2/v4/models"
@@ -17,7 +18,10 @@ import (
 
 var Srv *server.Server
 
-func InitOauth2Service() {
+func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail string) {
+
+	initAdminUser(adminUserName, adminUserPassword, adminUserEmail)
+
 	manager := manage.NewDefaultManager()
 	// token memory store
 	manager.MustTokenStorage(store.NewMemoryTokenStore())
@@ -46,6 +50,9 @@ func InitOauth2Service() {
 	Srv.SetPasswordAuthorizationHandler(func(username, password string) (userID string, err error) {
 
 		user, err := models2.CheckPassword(username, password)
+		if user == nil {
+			return "", err
+		}
 		return strconv.Itoa(user.Id), err
 	})
 
@@ -121,4 +128,34 @@ func token(s *server.Server, w http.ResponseWriter, data map[string]interface{},
 		return json.NewEncoder(w).Encode(common.Unauthorized(data))
 	}
 
+}
+
+func initAdminUser(adminUserName, adminUserPassword, adminUserEmail string) {
+
+	exist := models2.ExistUserByUserName(adminUserName)
+
+	if exist {
+		return
+	}
+
+	user := models2.User{
+		Username: adminUserName,
+		Password: adminUserPassword,
+		Email:    adminUserEmail,
+	}
+
+	id, err := models2.AddUser(&user)
+	if err == nil {
+		user.Id = int(id)
+		log.Println("初始化用户id为", user)
+	} else {
+		log.Println("初始化用户失败", err)
+	}
+}
+
+func CheckAccessToken(r *http.Request, access_token string) (tokenInfo oauth2.TokenInfo, err error) {
+
+	tokenInfo, err = Srv.Manager.LoadAccessToken(r.Context(), access_token)
+
+	return tokenInfo, err
 }
