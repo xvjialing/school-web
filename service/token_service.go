@@ -26,8 +26,6 @@ func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail string) 
 	// token memory store
 	manager.MustTokenStorage(store.NewMemoryTokenStore())
 
-	// token memory store
-	manager.MustTokenStorage(store.NewMemoryTokenStore())
 	//tokenStore := mysql.NewDefaultStore(
 	//	mysql.NewConfig("root:Xjl1994920!@tcp(rm-wz9t41ublf3gmrv3e5o.mysql.rds.aliyuncs.com:3306)/go-admin?charset=utf8"),
 	//)

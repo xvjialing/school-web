@@ -28,6 +28,7 @@ func (c *BaseController) Prepare() {
 	//}
 
 	access_token := c.Ctx.Input.Query("access_token")
+	c.Ctx.Request.Form.Add("access_token", access_token)
 
 	if len(access_token) == 0 {
 
