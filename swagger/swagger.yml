@@ -506,7 +506,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc000107c50.false:
+  107.0xc0002de510.false:
     title: "false"
     type: object
   common.Result:
@@ -517,7 +517,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc000107c50.false'
+        $ref: '#/definitions/107.0xc0002de510.false'
       msg:
         type: string
   models.Article:
