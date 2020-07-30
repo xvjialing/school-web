@@ -1,6 +1,6 @@
 FROM golang:1.12.9-alpine AS development
 ENV GO111MODULE on
-ENV GOPROXY https://mirrors.aliyun.com/goproxy/
+ENV GOPROXY https://goproxy.cn
 RUN go get github.com/beego/bee
 ENV APPNAME=school-web
 WORKDIR $GOPATH/src
