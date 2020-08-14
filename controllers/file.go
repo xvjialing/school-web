@@ -179,9 +179,9 @@ func (c *FileController) GetAll() {
 
 	l, err := models.GetAllFile(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = l
+		c.Data["json"] = common.Succes(l)
 	}
 	c.ServeJSON()
 }

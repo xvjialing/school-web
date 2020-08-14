@@ -477,7 +477,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc0002f66c0.false:
+  107.0xc0000f5d40.false:
     title: "false"
     type: object
   File:
@@ -491,7 +491,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc0002f66c0.false'
+        $ref: '#/definitions/107.0xc0000f5d40.false'
       msg:
         type: string
   models.Article:
