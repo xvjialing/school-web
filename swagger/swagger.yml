@@ -37,8 +37,7 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply
-          to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: limit
@@ -177,8 +176,7 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply
-          to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: limit
@@ -206,12 +204,12 @@ paths:
         description: access_token
         required: true
         type: string
-      - in: body
-        name: body
+      - in: file
+        name: file
         description: body for File content
         required: true
         schema:
-          $ref: '#/definitions/models.File'
+          $ref: '#/definitions/File'
       responses:
         "201":
           description: '{int} models.File'
@@ -365,8 +363,7 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply
-          to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: limit
@@ -480,8 +477,11 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc0000b7170.false:
+  107.0xc0002f66c0.false:
     title: "false"
+    type: object
+  File:
+    title: File
     type: object
   common.Result:
     title: Result
@@ -491,7 +491,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc0000b7170.false'
+        $ref: '#/definitions/107.0xc0002f66c0.false'
       msg:
         type: string
   models.Article:
@@ -537,6 +537,8 @@ definitions:
     title: User
     type: object
     properties:
+      Avatar:
+        type: string
       CreateTime:
         type: string
         format: datetime

@@ -20,6 +20,7 @@ type User struct {
 	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now"`
 	LastLogin  time.Time `orm:"column(last_login);type(timestamp);auto_now"`
 	Phone      string    `orm:"column(phone);size(255);null"`
+	Avatar     string    `orm:"column(avatar);size(255);null"`
 }
 
 func (t *User) TableName() string {

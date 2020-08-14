@@ -33,6 +33,14 @@ func AddFile(m *File) (id int64, err error) {
 	return
 }
 
+//add files
+func AddFiles(length int, m *[]File) (successNumbers int64, err error) {
+	o := orm.NewOrm()
+	successNumbers, err = o.InsertMulti(length, m)
+
+	return successNumbers, err
+}
+
 // GetFileById retrieves File by Id. Returns error if
 // Id doesn't exist
 func GetFileById(id int) (v *File, err error) {

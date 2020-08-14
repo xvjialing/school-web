@@ -302,12 +302,12 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
+                        "in": "file",
+                        "name": "file",
                         "description": "body for File content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.File"
+                            "$ref": "#/definitions/File"
                         }
                     }
                 ],
@@ -713,8 +713,12 @@
         }
     },
     "definitions": {
-        "107.0xc0000b7170.false": {
+        "107.0xc0002f66c0.false": {
             "title": "false",
+            "type": "object"
+        },
+        "File": {
+            "title": "File",
             "type": "object"
         },
         "common.Result": {
@@ -726,7 +730,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000b7170.false"
+                    "$ref": "#/definitions/107.0xc0002f66c0.false"
                 },
                 "msg": {
                     "type": "string"
@@ -791,6 +795,9 @@
             "title": "User",
             "type": "object",
             "properties": {
+                "Avatar": {
+                    "type": "string"
+                },
                 "CreateTime": {
                     "type": "string",
                     "format": "datetime"

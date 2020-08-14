@@ -3,14 +3,20 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
+	"github.com/google/uuid"
+	"io"
+	"os"
+	"school-web/common"
 	"school-web/models"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // FileController operations for File
 type FileController struct {
 	BaseController
+	//beego.Controller
 }
 
 // URLMapping ...
@@ -26,22 +32,73 @@ func (c *FileController) URLMapping() {
 // @Title Post
 // @Description create File
 // @Param	access_token	query	string	true	"access_token"
-// @Param	body		body 	models.File	true		"body for File content"
+// @Param	file		file 	File	true		"body for File content"
 // @Success 201 {int} models.File
 // @Failure 403 body is empty
 // @router / [post]
 func (c *FileController) Post() {
-	var v models.File
-	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddFile(&v); err == nil {
-			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
-		} else {
-			c.Data["json"] = err.Error()
-		}
-	} else {
-		c.Data["json"] = err.Error()
+
+	var fileList []models.File
+
+	files, err := c.GetFiles("file")
+	if err != nil {
+		c.Data["json"] = common.Failed(400, err.Error())
+		c.ServeJSON()
 	}
+
+	for i, _ := range files {
+		file, err := files[i].Open()
+		defer file.Close()
+		if err != nil {
+			c.Data["json"] = common.Failed(400, err.Error())
+			c.ServeJSON()
+			return
+		}
+		fileName := uuid.New().String() + "_" + files[i].Filename
+
+		//创建目录
+		uploadDir := "static/upload/" + time.Now().Format("2006/01/02/")
+		err = os.MkdirAll(uploadDir, 0777)
+		if err != nil {
+			c.Data["json"] = common.Failed(400, err.Error())
+			c.ServeJSON()
+			return
+		}
+
+		path := uploadDir + fileName
+
+		dst, err := os.Create(path)
+		defer dst.Close()
+		if err != nil {
+			c.Data["json"] = common.Failed(400, err.Error())
+			c.ServeJSON()
+			return
+		}
+		_, err = io.Copy(dst, file)
+		if err != nil {
+			c.Data["json"] = common.Failed(400, err.Error())
+			c.ServeJSON()
+			return
+		}
+		modelFile := models.File{
+			CreateTime: time.Now(),
+			Path:       path,
+			Type:       1,
+		}
+		fileList = append(fileList, modelFile)
+
+	}
+
+	_, err = models.AddFiles(len(fileList), &fileList)
+
+	if err != nil {
+		c.Data["json"] = common.Failed(400, err.Error())
+		c.ServeJSON()
+		return
+	}
+
+	c.Data["json"] = common.Succes(fileList)
+
 	c.ServeJSON()
 }
 
