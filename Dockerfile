@@ -1,14 +1,4 @@
-FROM golang:1.12.9-alpine AS development
-ENV GO111MODULE on
-ENV GOPROXY https://goproxy.cn
-RUN go get github.com/beego/bee
-ENV APPNAME=school-web
-WORKDIR $GOPATH/src
-RUN mkdir -p $APPNAME
-WORKDIR $GOPATH/src/$APPNAME
-ADD go.mod .
-ADD go.sum .
-RUN go mod download
+FROM registry.cn-shenzhen.aliyuncs.com/xvjialing/school-web:base AS development
 ADD . .
 RUN bee pack -be GOOS=linux
 RUN mkdir pack && tar -xzvf $APPNAME.tar.gz -C pack && cd pack && rm -rf go.mod go.sum && ls
