@@ -302,13 +302,11 @@
                         "type": "string"
                     },
                     {
-                        "in": "file",
+                        "in": "form",
                         "name": "file",
                         "description": "body for File content",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/File"
-                        }
+                        "type": "file"
                     }
                 ],
                 "responses": {
@@ -713,12 +711,8 @@
         }
     },
     "definitions": {
-        "107.0xc0000f5d40.false": {
+        "107.0xc0002cd080.false": {
             "title": "false",
-            "type": "object"
-        },
-        "File": {
-            "title": "File",
             "type": "object"
         },
         "common.Result": {
@@ -730,7 +724,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000f5d40.false"
+                    "$ref": "#/definitions/107.0xc0002cd080.false"
                 },
                 "msg": {
                     "type": "string"

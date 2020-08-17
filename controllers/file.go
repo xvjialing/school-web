@@ -16,7 +16,6 @@ import (
 // FileController operations for File
 type FileController struct {
 	BaseController
-	//beego.Controller
 }
 
 // URLMapping ...
@@ -32,7 +31,7 @@ func (c *FileController) URLMapping() {
 // @Title Post
 // @Description create File
 // @Param	access_token	query	string	true	"access_token"
-// @Param	file		file 	File	true		"body for File content"
+// @Param	file		form 	file	true		"body for File content"
 // @Success 201 {int} models.File
 // @Failure 403 body is empty
 // @router / [post]
