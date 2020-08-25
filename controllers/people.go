@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// 任务操作
+// 人物操作：教师、领导等
 type PeopleController struct {
 	BaseController
 }

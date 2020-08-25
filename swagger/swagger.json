@@ -884,7 +884,7 @@
         }
     },
     "definitions": {
-        "107.0xc0000c4b40.false": {
+        "107.0xc0000d6ae0.false": {
             "title": "false",
             "type": "object"
         },
@@ -897,7 +897,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000c4b40.false"
+                    "$ref": "#/definitions/107.0xc0000d6ae0.false"
                 },
                 "msg": {
                     "type": "string"
@@ -1036,7 +1036,7 @@
         },
         {
             "name": "people",
-            "description": "任务操作\n"
+            "description": "人物操作：教师、领导等\n"
         }
     ]
 }

@@ -594,7 +594,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc0000c4b40.false:
+  107.0xc0000d6ae0.false:
     title: "false"
     type: object
   common.Result:
@@ -605,7 +605,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc0000c4b40.false'
+        $ref: '#/definitions/107.0xc0000d6ae0.false'
       msg:
         type: string
   models.Article:
@@ -703,4 +703,4 @@ tags:
     UserController operations for User
 - name: people
   description: |
-    任务操作
+    人物操作：教师、领导等
