@@ -24,7 +24,7 @@ func (c *PeopleController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create People
+// @Description 创建人物，AvaterId是已上传图片返回的id，Type用于区分人物的类别，比如领导或者教师
 // @Param	body		body 	models.People	true		"body for People content"
 // @Success 201 {int} models.People
 // @Failure 403 body is empty
