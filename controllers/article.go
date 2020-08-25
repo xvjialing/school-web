@@ -25,6 +25,7 @@ func (c *ArticleController) URLMapping() {
 // Post ...
 // @Title Post
 // @Description create Article
+// @Param	access_token	header	string	true	"access_token"
 // @Param	body		body 	models.Article	true		"body for Article content"
 // @Success 201 {int} models.Article
 // @Failure 403 body is empty
@@ -47,6 +48,7 @@ func (c *ArticleController) Post() {
 // GetOne ...
 // @Title Get One
 // @Description get Article by id
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.Article
 // @Failure 403 :id is empty
@@ -66,6 +68,7 @@ func (c *ArticleController) GetOne() {
 // GetAll ...
 // @Title Get All
 // @Description get Article
+// @Param	access_token	header	string	true	"access_token"
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
@@ -129,6 +132,7 @@ func (c *ArticleController) GetAll() {
 // Put ...
 // @Title Put
 // @Description update the Article
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.Article	true		"body for Article content"
 // @Success 200 {object} models.Article
@@ -153,6 +157,7 @@ func (c *ArticleController) Put() {
 // Delete ...
 // @Title Delete
 // @Description delete the Article
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty

@@ -25,6 +25,7 @@ func (c *PeopleController) URLMapping() {
 // Post ...
 // @Title Post
 // @Description 创建人物，AvaterId是已上传图片返回的id，Type用于区分人物的类别，比如领导或者教师
+// @Param	access_token	header	string	true	"access_token"
 // @Param	body		body 	models.People	true		"body for People content"
 // @Success 201 {int} models.People
 // @Failure 403 body is empty
@@ -47,6 +48,7 @@ func (c *PeopleController) Post() {
 // GetOne ...
 // @Title Get One
 // @Description get People by id
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.People
 // @Failure 403 :id is empty
@@ -66,6 +68,7 @@ func (c *PeopleController) GetOne() {
 // GetAll ...
 // @Title Get All
 // @Description get People
+// @Param	access_token	header	string	true	"access_token"
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
@@ -129,6 +132,7 @@ func (c *PeopleController) GetAll() {
 // Put ...
 // @Title Put
 // @Description update the People
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.People	true		"body for People content"
 // @Success 200 {object} models.People
@@ -153,6 +157,7 @@ func (c *PeopleController) Put() {
 // Delete ...
 // @Title Delete
 // @Description delete the People
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty

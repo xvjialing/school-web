@@ -26,6 +26,7 @@ func (c *UserController) URLMapping() {
 // Post ...
 // @Title Post
 // @Description create User
+// @Param	access_token	header	string	true	"access_token"
 // @Param	body		body 	models.User	true		"body for User content"
 // @Success 200 {int} models.User
 // @Failure 403 body is empty
@@ -47,6 +48,7 @@ func (c *UserController) Post() {
 // GetOne ...
 // @Title Get One
 // @Description get User by id
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.User
 // @Failure 403 :id is empty
@@ -66,6 +68,7 @@ func (c *UserController) GetOne() {
 // GetAll ...
 // @Title Get All
 // @Description get User
+// @Param	access_token	header	string	true	"access_token"
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
@@ -129,6 +132,7 @@ func (c *UserController) GetAll() {
 // Put ...
 // @Title Put
 // @Description update the User
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.User	true		"body for User content"
 // @Success 200 {object} models.User
@@ -153,6 +157,7 @@ func (c *UserController) Put() {
 // Delete ...
 // @Title Delete
 // @Description delete the User
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
