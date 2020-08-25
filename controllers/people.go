@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// PeopleController operations for People
+// 任务操作
 type PeopleController struct {
 	BaseController
 }

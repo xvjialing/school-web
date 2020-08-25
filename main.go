@@ -48,11 +48,11 @@ func main() {
 	//	AllowCredentials: true,
 	//}))
 
-	beego.InsertFilter("/*", beego.BeforeRouter, corsFunc)
-
 	beegoAppConfig := beego.AppConfig
 
 	orm.RegisterDataBase("default", "mysql", beego.AppConfig.String("sqlconn"))
+
+	beego.InsertFilter("/*", beego.BeforeRouter, corsFunc)
 
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
