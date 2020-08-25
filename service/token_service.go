@@ -26,7 +26,7 @@ func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail, redisAd
 
 	manager := manage.NewDefaultManager()
 
-	//manager.SetAuthorizeCodeExp(time.Second* 15)
+	manager.SetAuthorizeCodeTokenCfg(&manage.Config{AccessTokenExp: time.Second * 10, RefreshTokenExp: time.Hour * 24 * 3, IsGenerateRefresh: true})
 
 	// token memory store
 	//manager.MustTokenStorage(store.NewMemoryTokenStore())
