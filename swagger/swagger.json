@@ -490,7 +490,7 @@
                 "tags": [
                     "people"
                 ],
-                "description": "create People",
+                "description": "创建人物，AvaterId是已上传图片返回的id，Type用于区分人物的类别，比如领导或者教师",
                 "operationId": "PeopleController.Post",
                 "parameters": [
                     {
@@ -884,7 +884,7 @@
         }
     },
     "definitions": {
-        "107.0xc0000d6ae0.false": {
+        "107.0xc0000c1110.false": {
             "title": "false",
             "type": "object"
         },
@@ -897,7 +897,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000d6ae0.false"
+                    "$ref": "#/definitions/107.0xc0000c1110.false"
                 },
                 "msg": {
                     "type": "string"
