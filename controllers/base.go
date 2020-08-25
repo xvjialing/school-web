@@ -29,12 +29,20 @@ func (c *BaseController) Prepare() {
 
 	access_token := c.Ctx.Input.Header("access_token")
 
+	if access_token == "" {
+
+		c.Data["json"] = common.Failed(401, "header access_token can not be empty")
+		c.ServeJSON()
+		c.StopRun()
+		return
+	}
+
 	//access_token := c.Ctx.Input.Query("access_token")
 	c.Ctx.Request.Form.Add("access_token", access_token)
 
 	if len(access_token) == 0 {
 
-		c.Data["json"] = common.Failed(401, "access_token can not be empty")
+		c.Data["json"] = common.Failed(401, "header access_token can not be empty")
 		c.ServeJSON()
 		c.StopRun()
 		return

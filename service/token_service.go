@@ -8,6 +8,8 @@ import (
 	"github.com/go-oauth2/oauth2/v4/models"
 	"github.com/go-oauth2/oauth2/v4/server"
 	"github.com/go-oauth2/oauth2/v4/store"
+	oredis "github.com/go-oauth2/redis/v4"
+	"github.com/go-redis/redis/v8"
 	"log"
 	"net/http"
 	"school-web/common"
@@ -18,18 +20,27 @@ import (
 
 var Srv *server.Server
 
-func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail string) {
+func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail, redisAddr, redisPassword string, redisDB int) {
 
 	initAdminUser(adminUserName, adminUserPassword, adminUserEmail)
 
 	manager := manage.NewDefaultManager()
+
+	//manager.SetAuthorizeCodeExp(time.Second* 15)
+
 	// token memory store
-	manager.MustTokenStorage(store.NewMemoryTokenStore())
+	//manager.MustTokenStorage(store.NewMemoryTokenStore())
 
 	//tokenStore := mysql.NewDefaultStore(
 	//	mysql.NewConfig("root:Xjl1994920!@tcp(rm-wz9t41ublf3gmrv3e5o.mysql.rds.aliyuncs.com:3306)/go-admin?charset=utf8"),
 	//)
 	//manager.MapTokenStorage(tokenStore)
+
+	manager.MapTokenStorage(oredis.NewRedisStore(&redis.Options{
+		Addr:     redisAddr,
+		DB:       redisDB,
+		Password: redisPassword,
+	}))
 
 	clientStore := store.NewClientStore()
 	clientID := "12345"

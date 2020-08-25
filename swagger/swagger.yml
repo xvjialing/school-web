@@ -19,11 +19,6 @@ paths:
       operationId: ArticleController.Get All
       parameters:
       - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
-      - in: query
         name: query
         description: Filter. e.g. col1:v1,col2:v2 ...
         type: string
@@ -61,11 +56,6 @@ paths:
       description: create Article
       operationId: ArticleController.Post
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: body
         name: body
         description: body for Article content
@@ -84,11 +74,6 @@ paths:
       description: get Article by id
       operationId: ArticleController.Get One
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The key for staticblock
@@ -107,11 +92,6 @@ paths:
       description: update the Article
       operationId: ArticleController.Put
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to update
@@ -136,11 +116,6 @@ paths:
       description: delete the Article
       operationId: ArticleController.Delete
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to delete
@@ -158,11 +133,6 @@ paths:
       description: get File
       operationId: FileController.Get All
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: query
         name: query
         description: Filter. e.g. col1:v1,col2:v2 ...
@@ -201,11 +171,6 @@ paths:
       description: create File
       operationId: FileController.Post
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: form
         name: file
         description: body for File content
@@ -223,11 +188,6 @@ paths:
       description: get File by id
       operationId: FileController.Get One
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The key for staticblock
@@ -246,11 +206,6 @@ paths:
       description: update the File
       operationId: FileController.Put
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to update
@@ -275,11 +230,6 @@ paths:
       description: delete the File
       operationId: FileController.Delete
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to delete
@@ -461,11 +411,6 @@ paths:
       operationId: UserController.Get All
       parameters:
       - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
-      - in: query
         name: query
         description: Filter. e.g. col1:v1,col2:v2 ...
         type: string
@@ -503,11 +448,6 @@ paths:
       description: create User
       operationId: UserController.Post
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: body
         name: body
         description: body for User content
@@ -526,11 +466,6 @@ paths:
       description: get User by id
       operationId: UserController.Get One
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The key for staticblock
@@ -549,11 +484,6 @@ paths:
       description: update the User
       operationId: UserController.Put
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to update
@@ -578,11 +508,6 @@ paths:
       description: delete the User
       operationId: UserController.Delete
       parameters:
-      - in: query
-        name: access_token
-        description: access_token
-        required: true
-        type: string
       - in: path
         name: id
         description: The id you want to delete
@@ -594,7 +519,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc0000c1110.false:
+  107.0xc000186840.false:
     title: "false"
     type: object
   common.Result:
@@ -605,7 +530,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc0000c1110.false'
+        $ref: '#/definitions/107.0xc000186840.false'
       msg:
         type: string
   models.Article:

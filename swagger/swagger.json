@@ -25,13 +25,6 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
                         "name": "query",
                         "description": "Filter. e.g. col1:v1,col2:v2 ...",
                         "type": "string"
@@ -87,13 +80,6 @@
                 "operationId": "ArticleController.Post",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "body",
                         "name": "body",
                         "description": "body for Article content",
@@ -122,13 +108,6 @@
                 "operationId": "ArticleController.Get One",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "path",
                         "name": "id",
                         "description": "The key for staticblock",
@@ -155,13 +134,6 @@
                 "description": "update the Article",
                 "operationId": "ArticleController.Put",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -199,13 +171,6 @@
                 "operationId": "ArticleController.Delete",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "path",
                         "name": "id",
                         "description": "The id you want to delete",
@@ -231,13 +196,6 @@
                 "description": "get File",
                 "operationId": "FileController.Get All",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "query",
                         "name": "query",
@@ -295,13 +253,6 @@
                 "operationId": "FileController.Post",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "form",
                         "name": "file",
                         "description": "body for File content",
@@ -327,13 +278,6 @@
                 "description": "get File by id",
                 "operationId": "FileController.Get One",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -361,13 +305,6 @@
                 "description": "update the File",
                 "operationId": "FileController.Put",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -404,13 +341,6 @@
                 "description": "delete the File",
                 "operationId": "FileController.Delete",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -684,13 +614,6 @@
                 "parameters": [
                     {
                         "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
                         "name": "query",
                         "description": "Filter. e.g. col1:v1,col2:v2 ...",
                         "type": "string"
@@ -746,13 +669,6 @@
                 "operationId": "UserController.Post",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "body",
                         "name": "body",
                         "description": "body for User content",
@@ -781,13 +697,6 @@
                 "operationId": "UserController.Get One",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "path",
                         "name": "id",
                         "description": "The key for staticblock",
@@ -814,13 +723,6 @@
                 "description": "update the User",
                 "operationId": "UserController.Put",
                 "parameters": [
-                    {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -858,13 +760,6 @@
                 "operationId": "UserController.Delete",
                 "parameters": [
                     {
-                        "in": "query",
-                        "name": "access_token",
-                        "description": "access_token",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
                         "in": "path",
                         "name": "id",
                         "description": "The id you want to delete",
@@ -884,7 +779,7 @@
         }
     },
     "definitions": {
-        "107.0xc0000c1110.false": {
+        "107.0xc000186840.false": {
             "title": "false",
             "type": "object"
         },
@@ -897,7 +792,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0000c1110.false"
+                    "$ref": "#/definitions/107.0xc000186840.false"
                 },
                 "msg": {
                     "type": "string"
