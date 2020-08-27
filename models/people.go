@@ -10,12 +10,12 @@ import (
 )
 
 type People struct {
-	Id       int    `orm:"column(id);auto"`
-	Name     string `orm:"column(name);size(255)"`
-	AvaterId int64  `orm:"column(avater_id);null" description:"文件ID"`
-	Detail   string `orm:"column(detail);null"`
-	Title    string `orm:"column(title);size(30);null" description:"标题"`
-	Type     int    `orm:"column(type)"`
+	Id        int    `orm:"column(id);auto"`
+	Name      string `orm:"column(name);size(255)"`
+	AvaterUrl string `orm:"column(avater_url);size(255);null"`
+	Detail    string `orm:"column(detail);null"`
+	Title     string `orm:"column(title);size(30);null" description:"标题"`
+	Type      int    `orm:"column(type)"`
 }
 
 func (t *People) TableName() string {

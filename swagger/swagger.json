@@ -1092,7 +1092,7 @@
         }
     },
     "definitions": {
-        "107.0xc00037eab0.false": {
+        "107.0xc000458240.false": {
             "title": "false",
             "type": "object"
         },
@@ -1105,7 +1105,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc00037eab0.false"
+                    "$ref": "#/definitions/107.0xc000458240.false"
                 },
                 "msg": {
                     "type": "string"
@@ -1170,10 +1170,8 @@
             "title": "People",
             "type": "object",
             "properties": {
-                "AvaterId": {
-                    "description": "文件ID",
-                    "type": "integer",
-                    "format": "int64"
+                "AvaterUrl": {
+                    "type": "string"
                 },
                 "Detail": {
                     "type": "string"
