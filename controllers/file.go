@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// FileController operations for File
+// 文件相关操作
 type FileController struct {
 	BaseController
 }

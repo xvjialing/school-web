@@ -5,11 +5,12 @@ import (
 	"school-web/service"
 )
 
+//用户认证相关操作
 type TokenController struct {
 	beego.Controller
 }
 
-// GetToken ...
+// 登录获取token ...
 // @Title GetToken
 // @Description GetToken
 // @Param	grant_type		formData	string	true	"grant_type: password,refresh_token ..."

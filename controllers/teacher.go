@@ -3,19 +3,18 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"school-web/common"
 	"school-web/models"
 	"strconv"
 	"strings"
 )
 
-// 文章相关操作
-type ArticleController struct {
+// TeacherController operations for Teacher
+type TeacherController struct {
 	BaseController
 }
 
 // URLMapping ...
-func (c *ArticleController) URLMapping() {
+func (c *TeacherController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -25,61 +24,58 @@ func (c *ArticleController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description create Article
-// @Param	access_token	header	string	true	"access_token"
-// @Param	body		body 	models.Article	true		"body for Article content"
-// @Success 201 {int} models.Article
+// @Description create Teacher
+// @Param	body		body 	models.Teacher	true		"body for Teacher content"
+// @Success 201 {int} models.Teacher
 // @Failure 403 body is empty
 // @router / [post]
-func (c *ArticleController) Post() {
-	var v models.Article
+func (c *TeacherController) Post() {
+	var v models.Teacher
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddArticle(&v); err == nil {
+		if _, err := models.AddTeacher(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.Succes(v)
+			c.Data["json"] = v
 		} else {
-			c.Data["json"] = common.Failed(400, err.Error())
+			c.Data["json"] = err.Error()
 		}
 	} else {
-		c.Data["json"] = common.Failed(400, err.Error())
+		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
 }
 
 // GetOne ...
 // @Title Get One
-// @Description get Article by id
-// @Param	access_token	header	string	true	"access_token"
+// @Description get Teacher by id
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.Article
+// @Success 200 {object} models.Teacher
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *ArticleController) GetOne() {
+func (c *TeacherController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetArticleById(id)
+	v, err := models.GetTeacherById(id)
 	if err != nil {
-		c.Data["json"] = common.Failed(400, err.Error())
+		c.Data["json"] = err.Error()
 	} else {
-		c.Data["json"] = common.Succes(v)
+		c.Data["json"] = v
 	}
 	c.ServeJSON()
 }
 
 // GetAll ...
 // @Title Get All
-// @Description get Article
-// @Param	access_token	header	string	true	"access_token"
+// @Description get Teacher
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.Article
+// @Success 200 {object} models.Teacher
 // @Failure 403
 // @router / [get]
-func (c *ArticleController) GetAll() {
+func (c *TeacherController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -121,55 +117,53 @@ func (c *ArticleController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllArticle(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllTeacher(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = common.Failed(400, err.Error())
+		c.Data["json"] = err.Error()
 	} else {
-		c.Data["json"] = common.Succes(l)
+		c.Data["json"] = l
 	}
 	c.ServeJSON()
 }
 
 // Put ...
 // @Title Put
-// @Description update the Article
-// @Param	access_token	header	string	true	"access_token"
+// @Description update the Teacher
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.Article	true		"body for Article content"
-// @Success 200 {object} models.Article
+// @Param	body		body 	models.Teacher	true		"body for Teacher content"
+// @Success 200 {object} models.Teacher
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *ArticleController) Put() {
+func (c *TeacherController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.Article{Id: id}
+	v := models.Teacher{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if err := models.UpdateArticleById(&v); err == nil {
-			c.Data["json"] = common.Succes("OK")
+		if err := models.UpdateTeacherById(&v); err == nil {
+			c.Data["json"] = "OK"
 		} else {
-			c.Data["json"] = common.Failed(400, err.Error())
+			c.Data["json"] = err.Error()
 		}
 	} else {
-		c.Data["json"] = common.Failed(400, err.Error())
+		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
 }
 
 // Delete ...
 // @Title Delete
-// @Description delete the Article
-// @Param	access_token	header	string	true	"access_token"
+// @Description delete the Teacher
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *ArticleController) Delete() {
+func (c *TeacherController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeleteArticle(id); err == nil {
-		c.Data["json"] = common.Succes("OK")
+	if err := models.DeleteTeacher(id); err == nil {
+		c.Data["json"] = "OK"
 	} else {
-		c.Data["json"] = common.Failed(400, err.Error())
+		c.Data["json"] = err.Error()
 	}
 	c.ServeJSON()
 }
