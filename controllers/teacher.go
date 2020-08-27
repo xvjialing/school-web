@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"errors"
+	"school-web/common"
 	"school-web/models"
 	"strconv"
 	"strings"
@@ -34,12 +34,12 @@ func (c *TeacherController) Post() {
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddTeacher(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = v
+			c.Data["json"] = common.Succes(v)
 		} else {
-			c.Data["json"] = err.Error()
+			c.Data["json"] = common.Failed(400, err.Error())
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }
@@ -56,9 +56,9 @@ func (c *TeacherController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetTeacherById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = v
+		c.Data["json"] = common.Succes(v)
 	}
 	c.ServeJSON()
 }
@@ -108,7 +108,7 @@ func (c *TeacherController) GetAll() {
 		for _, cond := range strings.Split(v, ",") {
 			kv := strings.SplitN(cond, ":", 2)
 			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				c.Data["json"] = common.Failed(400, "Error: invalid query key/value pair")
 				c.ServeJSON()
 				return
 			}
@@ -119,9 +119,9 @@ func (c *TeacherController) GetAll() {
 
 	l, err := models.GetAllTeacher(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = l
+		c.Data["json"] = common.Succes(l)
 	}
 	c.ServeJSON()
 }
@@ -140,12 +140,12 @@ func (c *TeacherController) Put() {
 	v := models.Teacher{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateTeacherById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Data["json"] = common.Succes("OK")
 		} else {
-			c.Data["json"] = err.Error()
+			c.Data["json"] = common.Failed(400, err.Error())
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }
@@ -161,9 +161,9 @@ func (c *TeacherController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteTeacher(id); err == nil {
-		c.Data["json"] = "OK"
+		c.Data["json"] = common.Succes("OK")
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }

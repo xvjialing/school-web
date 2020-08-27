@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"encoding/json"
-	"errors"
 	"school-web/common"
 	"school-web/models"
 	"strconv"
@@ -58,9 +57,9 @@ func (c *UserController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetUserById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = v
+		c.Data["json"] = common.Succes(v)
 	}
 	c.ServeJSON()
 }
@@ -111,7 +110,7 @@ func (c *UserController) GetAll() {
 		for _, cond := range strings.Split(v, ",") {
 			kv := strings.SplitN(cond, ":", 2)
 			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
+				c.Data["json"] = common.Failed(400, "Error: invalid query key/value pair")
 				c.ServeJSON()
 				return
 			}
@@ -122,9 +121,9 @@ func (c *UserController) GetAll() {
 
 	l, err := models.GetAllUser(query, fields, sortby, order, offset, limit)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = l
+		c.Data["json"] = common.Succes(l)
 	}
 	c.ServeJSON()
 }
@@ -144,12 +143,12 @@ func (c *UserController) Put() {
 	v := models.User{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateUserById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Data["json"] = common.Succes("OK")
 		} else {
-			c.Data["json"] = err.Error()
+			c.Data["json"] = common.Failed(400, err.Error())
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }
@@ -166,9 +165,9 @@ func (c *UserController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteUser(id); err == nil {
-		c.Data["json"] = "OK"
+		c.Data["json"] = common.Succes("OK")
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }

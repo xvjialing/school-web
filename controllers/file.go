@@ -114,9 +114,9 @@ func (c *FileController) GetOne() {
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetFileById(id)
 	if err != nil {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = v
+		c.Data["json"] = common.Succes(v)
 	}
 	c.ServeJSON()
 }
@@ -200,12 +200,12 @@ func (c *FileController) Put() {
 	v := models.File{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateFileById(&v); err == nil {
-			c.Data["json"] = "OK"
+			c.Data["json"] = common.Succes("OK")
 		} else {
-			c.Data["json"] = err.Error()
+			c.Data["json"] = common.Failed(400, err.Error())
 		}
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }
@@ -222,9 +222,9 @@ func (c *FileController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	if err := models.DeleteFile(id); err == nil {
-		c.Data["json"] = "OK"
+		c.Data["json"] = common.Succes("OK")
 	} else {
-		c.Data["json"] = err.Error()
+		c.Data["json"] = common.Failed(400, err.Error())
 	}
 	c.ServeJSON()
 }
