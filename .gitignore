@@ -5,3 +5,4 @@
 school-web
 *.exe
 static/
+docker-compose.yml

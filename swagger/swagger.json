@@ -470,13 +470,13 @@
                     },
                     {
                         "in": "query",
-                        "name": "limit",
+                        "name": "pageSize",
                         "description": "Limit the size of result set. Must be an integer",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "name": "offset",
+                        "name": "pageNum",
                         "description": "Start position of result set. Must be an integer",
                         "type": "string"
                     }
@@ -1127,7 +1127,7 @@
         }
     },
     "definitions": {
-        "107.0xc0003da240.false": {
+        "1094.0xc000259e90.false": {
             "title": "false",
             "type": "object"
         },
@@ -1140,7 +1140,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc0003da240.false"
+                    "$ref": "#/definitions/1094.0xc000259e90.false"
                 },
                 "msg": {
                     "type": "string"
@@ -1160,6 +1160,10 @@
                 "CreateTime": {
                     "type": "string",
                     "format": "datetime"
+                },
+                "FileIdList": {
+                    "description": "附件ID列表，英文逗号分隔，例如：1,2,3,4,5",
+                    "type": "string"
                 },
                 "Id": {
                     "type": "integer",

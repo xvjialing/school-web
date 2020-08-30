@@ -18,6 +18,42 @@ type Article struct {
 	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now"`
 	Author     string    `orm:"column(author);size(255)"`
 	Type       int       `orm:"column(type);null"`
+	FileIdList string    `orm:"column(file_id_list);size(255);null"  description:"附件ID列表，英文逗号分隔，例如：1,2,3,4,5"`
+}
+
+type ArticleFiles struct {
+	Id         int
+	Title      string
+	Subtitle   string
+	Content    string
+	CreateTime time.Time
+	Author     string
+	Type       int
+	FileIdList []File
+}
+
+type FileId struct {
+	FileIds []int
+}
+
+func ArticleToArticleFiles(article Article) (articleFiles *ArticleFiles, err error) {
+	articleFiles.Id = article.Id
+	articleFiles.Title = article.Title
+	articleFiles.Subtitle = article.Subtitle
+	articleFiles.Content = article.Content
+	articleFiles.CreateTime = article.CreateTime
+	articleFiles.Author = article.Author
+	articleFiles.Type = article.Type
+
+	fileIdsStr := article.FileIdList
+
+	files, err := FindFilesByIds(fileIdsStr)
+	if err != nil {
+		return nil, err
+	}
+	articleFiles.FileIdList = files
+
+	return articleFiles, nil
 }
 
 func (t *Article) TableName() string {

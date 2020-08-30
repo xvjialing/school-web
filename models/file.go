@@ -159,3 +159,14 @@ func DeleteFile(id int) (err error) {
 	}
 	return
 }
+
+//通过id列表查询文件列表，ID用英文逗号分隔，例如：1，2，3
+func FindFilesByIds(fileIds string) (files []File, err error) {
+	o := orm.NewOrm()
+	var fileList []File
+	_, err = o.Raw("select * from file where id in (?)", fileIds).QueryRows(&fileList)
+	if err != nil {
+		return nil, err
+	}
+	return fileList, nil
+}

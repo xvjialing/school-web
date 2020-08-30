@@ -73,8 +73,8 @@ func (c *LeaderController) GetOne() {
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
-// @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
-// @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Param	pageSize	query	string	false	"Limit the size of result set. Must be an integer"
+// @Param	pageNum	query	string	false	"Start position of result set. Must be an integer"
 // @Success 200 {object} models.Leader
 // @Failure 403
 // @router / [get]
@@ -83,20 +83,20 @@ func (c *LeaderController) GetAll() {
 	var sortby []string
 	var order []string
 	var query = make(map[string]string)
-	var limit int64 = 10
-	var offset int64
+	var pageSize int64 = 10
+	var currentPage int64
 
 	// fields: col1,col2,entity.col3
 	if v := c.GetString("fields"); v != "" {
 		fields = strings.Split(v, ",")
 	}
-	// limit: 10 (default is 10)
-	if v, err := c.GetInt64("limit"); err == nil {
-		limit = v
+	// pageSize: 10 (default is 10)
+	if v, err := c.GetInt64("pageSize"); err == nil {
+		pageSize = v
 	}
-	// offset: 0 (default is 0)
-	if v, err := c.GetInt64("offset"); err == nil {
-		offset = v
+	// currentPage: 0 (default is 0)
+	if v, err := c.GetInt64("pageNum"); err == nil {
+		currentPage = v
 	}
 	// sortby: col1,col2
 	if v := c.GetString("sortby"); v != "" {
@@ -120,7 +120,8 @@ func (c *LeaderController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllLeader(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLeaderPage(query, fields, sortby, order, (currentPage-1)*pageSize, pageSize)
+
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
