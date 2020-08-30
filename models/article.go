@@ -18,7 +18,7 @@ type Article struct {
 	Content    string    `orm:"column(content)"`
 	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now"`
 	Author     string    `orm:"column(author);size(255)"`
-	Type       int       `orm:"column(type);null"`
+	Type       string    `orm:"column(type);size(255);null"  description:"文章类型"`
 	FileIdList string    `orm:"column(file_id_list);size(255);null"  description:"附件ID列表，英文逗号分隔，例如：1,2,3,4,5"`
 }
 
@@ -29,12 +29,8 @@ type ArticleFiles struct {
 	Content    string
 	CreateTime time.Time
 	Author     string
-	Type       int
+	Type       string
 	FileIdList []File
-}
-
-type FileId struct {
-	FileIds []int
 }
 
 func ArticleToArticleFiles(article Article) (articleFile *ArticleFiles, err error) {

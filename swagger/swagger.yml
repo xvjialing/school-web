@@ -754,7 +754,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  1094.0xc0003675c0.false:
+  1094.0xc000400750.false:
     title: "false"
     type: object
   common.Result:
@@ -765,7 +765,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/1094.0xc0003675c0.false'
+        $ref: '#/definitions/1094.0xc000400750.false'
       msg:
         type: string
   models.Article:
@@ -790,8 +790,8 @@ definitions:
       Title:
         type: string
       Type:
-        type: integer
-        format: int64
+        description: 文章类型
+        type: string
   models.File:
     title: File
     type: object
