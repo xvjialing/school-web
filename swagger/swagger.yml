@@ -802,7 +802,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  1094.0xc00043c5d0.false:
+  1094.0xc0003f09c0.false:
     title: "false"
     type: object
   common.Result:
@@ -813,7 +813,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/1094.0xc00043c5d0.false'
+        $ref: '#/definitions/1094.0xc0003f09c0.false'
       msg:
         type: string
   models.Article:

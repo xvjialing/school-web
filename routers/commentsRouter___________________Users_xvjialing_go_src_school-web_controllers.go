@@ -142,6 +142,24 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
+		beego.ControllerComments{
+			Method:           "MinusOne",
+			Router:           "/index/minus_one/:id",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
+		beego.ControllerComments{
+			Method:           "PlusOne",
+			Router:           "/index/plus_one/:id",
+			AllowHTTPMethods: []string{"put"},
+			MethodParams:     param.Make(),
+			Filters:          nil,
+			Params:           nil})
+
 	beego.GlobalControllerRouter["school-web/controllers:TeacherController"] = append(beego.GlobalControllerRouter["school-web/controllers:TeacherController"],
 		beego.ControllerComments{
 			Method:           "Post",

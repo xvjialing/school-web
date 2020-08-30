@@ -4,9 +4,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/astaxie/beego/orm"
+	"log"
 	"math"
 	"reflect"
 	. "school-web/common"
+	"strconv"
 	"strings"
 )
 
@@ -238,6 +240,8 @@ func DeleteLeader(id int) (err error) {
 	v := Leader{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
+		index := v.Index
+		AllMinusOne(index)
 		var num int64
 		if num, err = o.Delete(&Leader{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
@@ -257,7 +261,7 @@ func LeaderIndexPlusOne(id int) (err error) {
 		}
 
 		changeLeader := Leader{Index: leader.Index + 1}
-		err := o.Read(&changeLeader)
+		err := o.Read(&changeLeader, "Index")
 		if err != nil {
 			return err
 		}
@@ -281,23 +285,27 @@ func LeaderIndexMinusOne(id int) (err error) {
 	leader := Leader{Id: id}
 	if o.Read(&leader) == nil {
 		if leader.Index == 1 {
+			log.Println("已经是最小序号")
 			return errors.New("已经是最小序号")
 		}
 
 		changeLeader := Leader{Index: leader.Index - 1}
-		err := o.Read(&changeLeader)
+		err := o.Read(&changeLeader, "Index")
 		if err != nil {
+			log.Println(err)
 			return err
 		}
 		changeLeader.Index = changeLeader.Index + 1
 		update, err := o.Update(&changeLeader, "Index")
 		if err != nil || update < 1 {
+			log.Println("update fialed")
 			return errors.New("update fialed")
 		}
 
 		leader.Index = leader.Index - 1
 		i, err := o.Update(&leader, "Index")
 		if err != nil || i < 1 {
+			log.Println("update fialed")
 			return errors.New("update fialed")
 		}
 	}
@@ -309,4 +317,14 @@ func Count() (count int64) {
 	qs := o.QueryTable(new(Leader))
 	i, _ := qs.Count()
 	return i
+}
+
+func AllMinusOne(index int64) error {
+	o := orm.NewOrm()
+	result, e := o.Raw("update leader set `index` = `index` - 1 where `index` > " + strconv.Itoa(int(index))).Exec()
+	if e != nil {
+		return e
+	}
+	log.Println(result)
+	return nil
 }
