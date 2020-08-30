@@ -8,13 +8,13 @@ import (
 	"strings"
 )
 
-// 人物操作：教师、领导等
-type PeopleController struct {
+// 领导相关操作
+type LeaderController struct {
 	BaseController
 }
 
 // URLMapping ...
-func (c *PeopleController) URLMapping() {
+func (c *LeaderController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
 	c.Mapping("GetAll", c.GetAll)
@@ -24,16 +24,16 @@ func (c *PeopleController) URLMapping() {
 
 // Post ...
 // @Title Post
-// @Description 创建人物，AvaterId是已上传图片返回的id，Type用于区分人物的类别，比如领导或者教师
+// @Description create Leader
 // @Param	access_token	header	string	true	"access_token"
-// @Param	body		body 	models.People	true		"body for People content"
-// @Success 201 {int} models.People
+// @Param	body		body 	models.Leader	true		"body for Leader content"
+// @Success 201 {int} models.Leader
 // @Failure 403 body is empty
 // @router / [post]
-func (c *PeopleController) Post() {
-	var v models.People
+func (c *LeaderController) Post() {
+	var v models.Leader
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddPeople(&v); err == nil {
+		if _, err := models.AddLeader(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
 			c.Data["json"] = common.Succes(v)
 		} else {
@@ -47,16 +47,16 @@ func (c *PeopleController) Post() {
 
 // GetOne ...
 // @Title Get One
-// @Description get People by id
+// @Description get Leader by id
 // @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The key for staticblock"
-// @Success 200 {object} models.People
+// @Success 200 {object} models.Leader
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (c *PeopleController) GetOne() {
+func (c *LeaderController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v, err := models.GetPeopleById(id)
+	v, err := models.GetLeaderById(id)
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
@@ -67,7 +67,7 @@ func (c *PeopleController) GetOne() {
 
 // GetAll ...
 // @Title Get All
-// @Description get People
+// @Description get Leader
 // @Param	access_token	header	string	true	"access_token"
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
@@ -75,10 +75,10 @@ func (c *PeopleController) GetOne() {
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
 // @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
 // @Param	offset	query	string	false	"Start position of result set. Must be an integer"
-// @Success 200 {object} models.People
+// @Success 200 {object} models.Leader
 // @Failure 403
 // @router / [get]
-func (c *PeopleController) GetAll() {
+func (c *LeaderController) GetAll() {
 	var fields []string
 	var sortby []string
 	var order []string
@@ -120,7 +120,7 @@ func (c *PeopleController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllPeople(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllLeader(query, fields, sortby, order, offset, limit)
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
@@ -131,19 +131,19 @@ func (c *PeopleController) GetAll() {
 
 // Put ...
 // @Title Put
-// @Description update the People
+// @Description update the Leader
 // @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to update"
-// @Param	body		body 	models.People	true		"body for People content"
-// @Success 200 {object} models.People
+// @Param	body		body 	models.Leader	true		"body for Leader content"
+// @Success 200 {object} models.Leader
 // @Failure 403 :id is not int
 // @router /:id [put]
-func (c *PeopleController) Put() {
+func (c *LeaderController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	v := models.People{Id: id}
+	v := models.Leader{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if err := models.UpdatePeopleById(&v); err == nil {
+		if err := models.UpdateLeaderById(&v); err == nil {
 			c.Data["json"] = common.Succes("OK")
 		} else {
 			c.Data["json"] = common.Failed(400, err.Error())
@@ -156,16 +156,16 @@ func (c *PeopleController) Put() {
 
 // Delete ...
 // @Title Delete
-// @Description delete the People
+// @Description delete the Leader
 // @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (c *PeopleController) Delete() {
+func (c *LeaderController) Delete() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
-	if err := models.DeletePeople(id); err == nil {
+	if err := models.DeleteLeader(id); err == nil {
 		c.Data["json"] = common.Succes("OK")
 	} else {
 		c.Data["json"] = common.Failed(400, err.Error())

@@ -9,48 +9,47 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type People struct {
+type Leader struct {
 	Id        int    `orm:"column(id);auto"`
-	Name      string `orm:"column(name);size(255)"`
-	AvaterUrl string `orm:"column(avater_url);size(255);null"`
-	Detail    string `orm:"column(detail);null"`
-	Title     string `orm:"column(title);size(30);null" description:"标题"`
-	Type      int    `orm:"column(type)"`
+	Name      string `orm:"column(name);size(255)" description:"姓名"`
+	AvaterUrl string `orm:"column(avater_url);size(255);null" description:"头像路径"`
+	Detail    string `orm:"column(detail);null" description:"详情"`
+	Title     string `orm:"column(title);size(255);null" description:"标题"`
 }
 
-func (t *People) TableName() string {
-	return "people"
+func (t *Leader) TableName() string {
+	return "leader"
 }
 
 func init() {
-	orm.RegisterModel(new(People))
+	orm.RegisterModel(new(Leader))
 }
 
-// AddPeople insert a new People into database and returns
+// AddLeader insert a new Leader into database and returns
 // last inserted Id on success.
-func AddPeople(m *People) (id int64, err error) {
+func AddLeader(m *Leader) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
 }
 
-// GetPeopleById retrieves People by Id. Returns error if
+// GetLeaderById retrieves Leader by Id. Returns error if
 // Id doesn't exist
-func GetPeopleById(id int) (v *People, err error) {
+func GetLeaderById(id int) (v *Leader, err error) {
 	o := orm.NewOrm()
-	v = &People{Id: id}
+	v = &Leader{Id: id}
 	if err = o.Read(v); err == nil {
 		return v, nil
 	}
 	return nil, err
 }
 
-// GetAllPeople retrieves all People matches certain condition. Returns empty list if
+// GetAllLeader retrieves all Leader matches certain condition. Returns empty list if
 // no records exist
-func GetAllPeople(query map[string]string, fields []string, sortby []string, order []string,
+func GetAllLeader(query map[string]string, fields []string, sortby []string, order []string,
 	offset int64, limit int64) (ml []interface{}, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable(new(People))
+	qs := o.QueryTable(new(Leader))
 	// query k=v
 	for k, v := range query {
 		// rewrite dot-notation to Object__Attribute
@@ -100,7 +99,7 @@ func GetAllPeople(query map[string]string, fields []string, sortby []string, ord
 		}
 	}
 
-	var l []People
+	var l []Leader
 	qs = qs.OrderBy(sortFields...)
 	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
 		if len(fields) == 0 {
@@ -123,11 +122,11 @@ func GetAllPeople(query map[string]string, fields []string, sortby []string, ord
 	return nil, err
 }
 
-// UpdatePeople updates People by Id and returns error if
+// UpdateLeader updates Leader by Id and returns error if
 // the record to be updated doesn't exist
-func UpdatePeopleById(m *People) (err error) {
+func UpdateLeaderById(m *Leader) (err error) {
 	o := orm.NewOrm()
-	v := People{Id: m.Id}
+	v := Leader{Id: m.Id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
@@ -138,15 +137,15 @@ func UpdatePeopleById(m *People) (err error) {
 	return
 }
 
-// DeletePeople deletes People by Id and returns error if
+// DeleteLeader deletes Leader by Id and returns error if
 // the record to be deleted doesn't exist
-func DeletePeople(id int) (err error) {
+func DeleteLeader(id int) (err error) {
 	o := orm.NewOrm()
-	v := People{Id: id}
+	v := Leader{Id: id}
 	// ascertain id exists in the database
 	if err = o.Read(&v); err == nil {
 		var num int64
-		if num, err = o.Delete(&People{Id: id}); err == nil {
+		if num, err = o.Delete(&Leader{Id: id}); err == nil {
 			fmt.Println("Number of records deleted in database:", num)
 		}
 	}

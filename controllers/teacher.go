@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// TeacherController operations for Teacher
+// 教师相关操作
 type TeacherController struct {
 	BaseController
 }
@@ -25,6 +25,7 @@ func (c *TeacherController) URLMapping() {
 // Post ...
 // @Title Post
 // @Description create Teacher
+// @Param	access_token	header	string	true	"access_token"
 // @Param	body		body 	models.Teacher	true		"body for Teacher content"
 // @Success 201 {int} models.Teacher
 // @Failure 403 body is empty
@@ -47,6 +48,7 @@ func (c *TeacherController) Post() {
 // GetOne ...
 // @Title Get One
 // @Description get Teacher by id
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The key for staticblock"
 // @Success 200 {object} models.Teacher
 // @Failure 403 :id is empty
@@ -66,6 +68,7 @@ func (c *TeacherController) GetOne() {
 // GetAll ...
 // @Title Get All
 // @Description get Teacher
+// @Param	access_token	header	string	true	"access_token"
 // @Param	query	query	string	false	"Filter. e.g. col1:v1,col2:v2 ..."
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
@@ -129,6 +132,7 @@ func (c *TeacherController) GetAll() {
 // Put ...
 // @Title Put
 // @Description update the Teacher
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to update"
 // @Param	body		body 	models.Teacher	true		"body for Teacher content"
 // @Success 200 {object} models.Teacher
@@ -153,6 +157,7 @@ func (c *TeacherController) Put() {
 // Delete ...
 // @Title Delete
 // @Description delete the Teacher
+// @Param	access_token	header	string	true	"access_token"
 // @Param	id		path 	string	true		"The id you want to delete"
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty

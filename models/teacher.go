@@ -11,10 +11,10 @@ import (
 
 type Teacher struct {
 	Id        int    `orm:"column(id);auto"`
-	Name      string `orm:"column(name);size(255)"`
-	AvaterUrl string `orm:"column(avater_url);size(255);null"`
-	Detail    string `orm:"column(detail);null"`
-	Title     string `orm:"column(title);size(255);null"`
+	Name      string `orm:"column(name);size(255)" description:"姓名"`
+	AvaterUrl string `orm:"column(avater_url);size(255);null" description:"图片路径"`
+	Detail    string `orm:"column(detail);null" description:"详情"`
+	Title     string `orm:"column(title);size(255);null" description:"标题"`
 }
 
 func (t *Teacher) TableName() string {

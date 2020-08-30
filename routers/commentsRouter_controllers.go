@@ -97,7 +97,7 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["school-web/controllers:PeopleController"] = append(beego.GlobalControllerRouter["school-web/controllers:PeopleController"],
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
 		beego.ControllerComments{
 			Method:           "Post",
 			Router:           "/",
@@ -106,7 +106,7 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["school-web/controllers:PeopleController"] = append(beego.GlobalControllerRouter["school-web/controllers:PeopleController"],
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
 		beego.ControllerComments{
 			Method:           "GetAll",
 			Router:           "/",
@@ -115,7 +115,7 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["school-web/controllers:PeopleController"] = append(beego.GlobalControllerRouter["school-web/controllers:PeopleController"],
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
 		beego.ControllerComments{
 			Method:           "GetOne",
 			Router:           "/:id",
@@ -124,7 +124,7 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["school-web/controllers:PeopleController"] = append(beego.GlobalControllerRouter["school-web/controllers:PeopleController"],
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
 		beego.ControllerComments{
 			Method:           "Put",
 			Router:           "/:id",
@@ -133,7 +133,7 @@ func init() {
 			Filters:          nil,
 			Params:           nil})
 
-	beego.GlobalControllerRouter["school-web/controllers:PeopleController"] = append(beego.GlobalControllerRouter["school-web/controllers:PeopleController"],
+	beego.GlobalControllerRouter["school-web/controllers:LeaderController"] = append(beego.GlobalControllerRouter["school-web/controllers:LeaderController"],
 		beego.ControllerComments{
 			Method:           "Delete",
 			Router:           "/:id",

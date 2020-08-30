@@ -429,13 +429,13 @@
                 }
             }
         },
-        "/people/": {
+        "/leader/": {
             "get": {
                 "tags": [
-                    "people"
+                    "leader"
                 ],
-                "description": "get People",
-                "operationId": "PeopleController.Get All",
+                "description": "get Leader",
+                "operationId": "LeaderController.Get All",
                 "parameters": [
                     {
                         "in": "header",
@@ -485,7 +485,7 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.People"
+                            "$ref": "#/definitions/models.Leader"
                         }
                     },
                     "403": {
@@ -495,10 +495,10 @@
             },
             "post": {
                 "tags": [
-                    "people"
+                    "leader"
                 ],
-                "description": "创建人物，AvaterId是已上传图片返回的id，Type用于区分人物的类别，比如领导或者教师",
-                "operationId": "PeopleController.Post",
+                "description": "create Leader",
+                "operationId": "LeaderController.Post",
                 "parameters": [
                     {
                         "in": "header",
@@ -510,16 +510,16 @@
                     {
                         "in": "body",
                         "name": "body",
-                        "description": "body for People content",
+                        "description": "body for Leader content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.People"
+                            "$ref": "#/definitions/models.Leader"
                         }
                     }
                 ],
                 "responses": {
                     "201": {
-                        "description": "{int} models.People"
+                        "description": "{int} models.Leader"
                     },
                     "403": {
                         "description": "body is empty"
@@ -527,13 +527,13 @@
                 }
             }
         },
-        "/people/{id}": {
+        "/leader/{id}": {
             "get": {
                 "tags": [
-                    "people"
+                    "leader"
                 ],
-                "description": "get People by id",
-                "operationId": "PeopleController.Get One",
+                "description": "get Leader by id",
+                "operationId": "LeaderController.Get One",
                 "parameters": [
                     {
                         "in": "header",
@@ -554,7 +554,7 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.People"
+                            "$ref": "#/definitions/models.Leader"
                         }
                     },
                     "403": {
@@ -564,10 +564,10 @@
             },
             "put": {
                 "tags": [
-                    "people"
+                    "leader"
                 ],
-                "description": "update the People",
-                "operationId": "PeopleController.Put",
+                "description": "update the Leader",
+                "operationId": "LeaderController.Put",
                 "parameters": [
                     {
                         "in": "header",
@@ -586,10 +586,10 @@
                     {
                         "in": "body",
                         "name": "body",
-                        "description": "body for People content",
+                        "description": "body for Leader content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.People"
+                            "$ref": "#/definitions/models.Leader"
                         }
                     }
                 ],
@@ -597,7 +597,7 @@
                     "200": {
                         "description": "",
                         "schema": {
-                            "$ref": "#/definitions/models.People"
+                            "$ref": "#/definitions/models.Leader"
                         }
                     },
                     "403": {
@@ -607,10 +607,10 @@
             },
             "delete": {
                 "tags": [
-                    "people"
+                    "leader"
                 ],
-                "description": "delete the People",
-                "operationId": "PeopleController.Delete",
+                "description": "delete the Leader",
+                "operationId": "LeaderController.Delete",
                 "parameters": [
                     {
                         "in": "header",
@@ -645,6 +645,13 @@
                 "description": "get Teacher",
                 "operationId": "TeacherController.Get All",
                 "parameters": [
+                    {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "query",
                         "name": "query",
@@ -702,6 +709,13 @@
                 "operationId": "TeacherController.Post",
                 "parameters": [
                     {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "body",
                         "name": "body",
                         "description": "body for Teacher content",
@@ -730,6 +744,13 @@
                 "operationId": "TeacherController.Get One",
                 "parameters": [
                     {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
                         "in": "path",
                         "name": "id",
                         "description": "The key for staticblock",
@@ -756,6 +777,13 @@
                 "description": "update the Teacher",
                 "operationId": "TeacherController.Put",
                 "parameters": [
+                    {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -792,6 +820,13 @@
                 "description": "delete the Teacher",
                 "operationId": "TeacherController.Delete",
                 "parameters": [
+                    {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "path",
                         "name": "id",
@@ -1092,7 +1127,7 @@
         }
     },
     "definitions": {
-        "107.0xc000458240.false": {
+        "107.0xc00035cd50.false": {
             "title": "false",
             "type": "object"
         },
@@ -1105,7 +1140,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/107.0xc000458240.false"
+                    "$ref": "#/definitions/107.0xc00035cd50.false"
                 },
                 "msg": {
                     "type": "string"
@@ -1166,14 +1201,16 @@
                 }
             }
         },
-        "models.People": {
-            "title": "People",
+        "models.Leader": {
+            "title": "Leader",
             "type": "object",
             "properties": {
                 "AvaterUrl": {
+                    "description": "头像路径",
                     "type": "string"
                 },
                 "Detail": {
+                    "description": "详情",
                     "type": "string"
                 },
                 "Id": {
@@ -1181,15 +1218,12 @@
                     "format": "int64"
                 },
                 "Name": {
+                    "description": "姓名",
                     "type": "string"
                 },
                 "Title": {
                     "description": "标题",
                     "type": "string"
-                },
-                "Type": {
-                    "type": "integer",
-                    "format": "int64"
                 }
             }
         },
@@ -1198,9 +1232,11 @@
             "type": "object",
             "properties": {
                 "AvaterUrl": {
+                    "description": "图片路径",
                     "type": "string"
                 },
                 "Detail": {
+                    "description": "详情",
                     "type": "string"
                 },
                 "Id": {
@@ -1208,9 +1244,11 @@
                     "format": "int64"
                 },
                 "Name": {
+                    "description": "姓名",
                     "type": "string"
                 },
                 "Title": {
+                    "description": "标题",
                     "type": "string"
                 }
             }
@@ -1267,12 +1305,12 @@
             "description": "UserController operations for User\n"
         },
         {
-            "name": "people",
-            "description": "人物操作：教师、领导等\n"
+            "name": "teacher",
+            "description": "教师相关操作\n"
         },
         {
-            "name": "teacher",
-            "description": "TeacherController operations for Teacher\n"
+            "name": "leader",
+            "description": "领导相关操作\n"
         }
     ]
 }

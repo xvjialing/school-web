@@ -39,14 +39,14 @@ func init() {
 				&controllers.UserController{},
 			),
 		),
-		beego.NSNamespace("/people",
-			beego.NSInclude(
-				&controllers.PeopleController{},
-			),
-		),
 		beego.NSNamespace("/teacher",
 			beego.NSInclude(
 				&controllers.TeacherController{},
+			),
+		),
+		beego.NSNamespace("/leader",
+			beego.NSInclude(
+				&controllers.LeaderController{},
 			),
 		),
 	)
