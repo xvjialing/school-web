@@ -754,7 +754,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  107.0xc00035cd50.false:
+  107.0xc0003da240.false:
     title: "false"
     type: object
   common.Result:
@@ -765,7 +765,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/107.0xc00035cd50.false'
+        $ref: '#/definitions/107.0xc0003da240.false'
       msg:
         type: string
   models.Article:
@@ -845,6 +845,9 @@ definitions:
       Title:
         description: 标题
         type: string
+      Type:
+        type: integer
+        format: int64
   models.User:
     title: User
     type: object
@@ -880,7 +883,7 @@ tags:
     用户认证相关操作
 - name: user
   description: |
-    UserController operations for User
+    平台用户操作
 - name: teacher
   description: |
     教师相关操作

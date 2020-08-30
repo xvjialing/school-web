@@ -15,6 +15,7 @@ type Teacher struct {
 	AvaterUrl string `orm:"column(avater_url);size(255);null" description:"图片路径"`
 	Detail    string `orm:"column(detail);null" description:"详情"`
 	Title     string `orm:"column(title);size(255);null" description:"标题"`
+	Type      int    `orm:"column(type);null"`
 }
 
 func (t *Teacher) TableName() string {

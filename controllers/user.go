@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// UserController operations for User
+// 平台用户操作
 type UserController struct {
 	BaseController
 }
