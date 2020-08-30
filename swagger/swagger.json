@@ -678,13 +678,13 @@
                     },
                     {
                         "in": "query",
-                        "name": "limit",
+                        "name": "pageSize",
                         "description": "Limit the size of result set. Must be an integer",
                         "type": "string"
                     },
                     {
                         "in": "query",
-                        "name": "offset",
+                        "name": "pageNum",
                         "description": "Start position of result set. Must be an integer",
                         "type": "string"
                     }
@@ -1127,7 +1127,7 @@
         }
     },
     "definitions": {
-        "1094.0xc000259e90.false": {
+        "1094.0xc0002ddd70.false": {
             "title": "false",
             "type": "object"
         },
@@ -1140,7 +1140,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/1094.0xc000259e90.false"
+                    "$ref": "#/definitions/1094.0xc0002ddd70.false"
                 },
                 "msg": {
                     "type": "string"

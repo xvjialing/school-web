@@ -37,7 +37,8 @@ type FileId struct {
 	FileIds []int
 }
 
-func ArticleToArticleFiles(article Article) (articleFiles *ArticleFiles, err error) {
+func ArticleToArticleFiles(article Article) (articleFile *ArticleFiles, err error) {
+	var articleFiles ArticleFiles
 	articleFiles.Id = article.Id
 	articleFiles.Title = article.Title
 	articleFiles.Subtitle = article.Subtitle
@@ -54,7 +55,7 @@ func ArticleToArticleFiles(article Article) (articleFiles *ArticleFiles, err err
 	}
 	articleFiles.FileIdList = files
 
-	return articleFiles, nil
+	return &articleFiles, nil
 }
 
 func ArticalListToArticleFilsList(articleList []Article) (articleFileList *[]ArticleFiles, err error) {

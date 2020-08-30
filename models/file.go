@@ -164,7 +164,7 @@ func DeleteFile(id int) (err error) {
 func FindFilesByIds(fileIds string) (files []File, err error) {
 	o := orm.NewOrm()
 	var fileList []File
-	_, err = o.Raw("select * from file where id in (?)", fileIds).QueryRows(&fileList)
+	_, err = o.Raw("select * from file where id in (" + fileIds + ")").QueryRows(&fileList)
 	if err != nil {
 		return nil, err
 	}
