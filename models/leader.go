@@ -249,11 +249,24 @@ func DeleteLeader(id int) (err error) {
 func LeaderIndexPlusOne(id int) (err error) {
 	count := Count()
 	o := orm.NewOrm()
+
 	leader := Leader{Id: id}
 	if o.Read(&leader) == nil {
 		if leader.Index == count {
 			return errors.New("已经是最大序号")
 		}
+
+		changeLeader := Leader{Index: leader.Index + 1}
+		err := o.Read(&changeLeader)
+		if err != nil {
+			return err
+		}
+		changeLeader.Index = changeLeader.Index - 1
+		update, err := o.Update(&changeLeader, "Index")
+		if err != nil || update < 1 {
+			return errors.New("update fialed")
+		}
+
 		leader.Index = leader.Index + 1
 		i, err := o.Update(&leader, "Index")
 		if err != nil || i < 1 {
@@ -270,6 +283,18 @@ func LeaderIndexMinusOne(id int) (err error) {
 		if leader.Index == 1 {
 			return errors.New("已经是最小序号")
 		}
+
+		changeLeader := Leader{Index: leader.Index - 1}
+		err := o.Read(&changeLeader)
+		if err != nil {
+			return err
+		}
+		changeLeader.Index = changeLeader.Index + 1
+		update, err := o.Update(&changeLeader, "Index")
+		if err != nil || update < 1 {
+			return errors.New("update fialed")
+		}
+
 		leader.Index = leader.Index - 1
 		i, err := o.Update(&leader, "Index")
 		if err != nil || i < 1 {
