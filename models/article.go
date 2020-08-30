@@ -45,12 +45,13 @@ func ArticleToArticleFiles(article Article) (articleFile *ArticleFiles, err erro
 
 	fileIdsStr := article.FileIdList
 
-	files, err := FindFilesByIds(fileIdsStr)
-	if err != nil {
-		return nil, err
+	if len(fileIdsStr) != 0 {
+		files, err := FindFilesByIds(fileIdsStr)
+		if err != nil {
+			return nil, err
+		}
+		articleFiles.FileIdList = files
 	}
-	articleFiles.FileIdList = files
-
 	return &articleFiles, nil
 }
 

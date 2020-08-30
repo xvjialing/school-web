@@ -527,6 +527,78 @@
                 }
             }
         },
+        "/leader/index/minus_one/{id}": {
+            "put": {
+                "tags": [
+                    "leader"
+                ],
+                "description": "Leader Index Minus 1",
+                "operationId": "LeaderController.Put",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Leader"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            }
+        },
+        "/leader/index/plus_one/{id}": {
+            "put": {
+                "tags": [
+                    "leader"
+                ],
+                "description": "Leader Index plus 1",
+                "operationId": "LeaderController.Put",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "access_token",
+                        "description": "access_token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "The id you want to update",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.Leader"
+                        }
+                    },
+                    "403": {
+                        "description": ":id is not int"
+                    }
+                }
+            }
+        },
         "/leader/{id}": {
             "get": {
                 "tags": [
@@ -1127,7 +1199,7 @@
         }
     },
     "definitions": {
-        "1094.0xc0003f8b40.false": {
+        "1094.0xc0002f1680.false": {
             "title": "false",
             "type": "object"
         },
@@ -1140,7 +1212,7 @@
                     "format": "int64"
                 },
                 "data": {
-                    "$ref": "#/definitions/1094.0xc0003f8b40.false"
+                    "$ref": "#/definitions/1094.0xc0002f1680.false"
                 },
                 "msg": {
                     "type": "string"
@@ -1218,6 +1290,11 @@
                     "type": "string"
                 },
                 "Id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Index": {
+                    "description": "排序序号",
                     "type": "integer",
                     "format": "int64"
                 },

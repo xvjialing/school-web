@@ -155,6 +155,50 @@ func (c *LeaderController) Put() {
 	c.ServeJSON()
 }
 
+// Put ...
+// @Title Put
+// @Description Leader Index plus 1
+// @Param	access_token	header	string	true	"access_token"
+// @Param	id		path 	string	true		"The id you want to update"
+// @Success 200 {object} models.Leader
+// @Failure 403 :id is not int
+// @router /index/plus_one/:id [put]
+func (c *LeaderController) PlusOne() {
+	idStr := c.Ctx.Input.Param(":id")
+	id, _ := strconv.Atoi(idStr)
+
+	err := models.LeaderIndexPlusOne(id)
+
+	if err == nil {
+		c.Data["json"] = common.Succes("OK")
+	} else {
+		c.Data["json"] = common.Failed(400, err.Error())
+	}
+	c.ServeJSON()
+}
+
+// Put ...
+// @Title Put
+// @Description Leader Index Minus 1
+// @Param	access_token	header	string	true	"access_token"
+// @Param	id		path 	string	true		"The id you want to update"
+// @Success 200 {object} models.Leader
+// @Failure 403 :id is not int
+// @router /index/minus_one/:id [put]
+func (c *LeaderController) MinusOne() {
+	idStr := c.Ctx.Input.Param(":id")
+	id, _ := strconv.Atoi(idStr)
+
+	err := models.LeaderIndexMinusOne(id)
+
+	if err == nil {
+		c.Data["json"] = common.Succes("OK")
+	} else {
+		c.Data["json"] = common.Failed(400, err.Error())
+	}
+	c.ServeJSON()
+}
+
 // Delete ...
 // @Title Delete
 // @Description delete the Leader

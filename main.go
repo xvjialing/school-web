@@ -37,6 +37,7 @@ func main() {
 	beegoAppConfig := beego.AppConfig
 
 	orm.RegisterDataBase("default", "mysql", beego.AppConfig.String("sqlconn"))
+	//orm.Debug = true
 
 	beego.InsertFilter("/*", beego.BeforeRouter, corsFunc)
 

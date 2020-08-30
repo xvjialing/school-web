@@ -11,11 +11,12 @@ import (
 )
 
 type Leader struct {
-	Id        int    `orm:"column(id);auto"`
+	Id        int    `form:"_" orm:"column(id);auto"`
 	Name      string `orm:"column(name);size(255)" description:"姓名"`
 	AvaterUrl string `orm:"column(avater_url);size(255);null" description:"头像路径"`
 	Detail    string `orm:"column(detail);null" description:"详情"`
 	Title     string `orm:"column(title);size(255);null" description:"标题"`
+	Index     int64  `form:"_" orm:"column(index);null"  description:"排序序号"`
 }
 
 func (t *Leader) TableName() string {
@@ -29,6 +30,7 @@ func init() {
 // AddLeader insert a new Leader into database and returns
 // last inserted Id on success.
 func AddLeader(m *Leader) (id int64, err error) {
+	m.Index = Count() + 1
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
 	return
@@ -242,4 +244,44 @@ func DeleteLeader(id int) (err error) {
 		}
 	}
 	return
+}
+
+func LeaderIndexPlusOne(id int) (err error) {
+	count := Count()
+	o := orm.NewOrm()
+	leader := Leader{Id: id}
+	if o.Read(&leader) == nil {
+		if leader.Index == count {
+			return errors.New("已经是最大序号")
+		}
+		leader.Index = leader.Index + 1
+		i, err := o.Update(&leader, "Index")
+		if err != nil || i < 1 {
+			return errors.New("update fialed")
+		}
+	}
+	return nil
+}
+
+func LeaderIndexMinusOne(id int) (err error) {
+	o := orm.NewOrm()
+	leader := Leader{Id: id}
+	if o.Read(&leader) == nil {
+		if leader.Index == 1 {
+			return errors.New("已经是最小序号")
+		}
+		leader.Index = leader.Index - 1
+		i, err := o.Update(&leader, "Index")
+		if err != nil || i < 1 {
+			return errors.New("update fialed")
+		}
+	}
+	return nil
+}
+
+func Count() (count int64) {
+	o := orm.NewOrm()
+	qs := o.QueryTable(new(Leader))
+	i, _ := qs.Count()
+	return i
 }
