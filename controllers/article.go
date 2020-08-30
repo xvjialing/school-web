@@ -33,10 +33,17 @@ func (c *ArticleController) URLMapping() {
 // @router / [post]
 func (c *ArticleController) Post() {
 	var v models.Article
+
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if _, err := models.AddArticle(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
-			c.Data["json"] = common.Succes(v)
+			articleFiles, err := models.ArticleToArticleFiles(v)
+			if err != nil {
+				c.Data["json"] = common.Failed(400, err.Error())
+			} else {
+				c.Data["json"] = common.Succes(articleFiles)
+			}
+
 		} else {
 			c.Data["json"] = common.Failed(400, err.Error())
 		}
@@ -84,20 +91,20 @@ func (c *ArticleController) GetAll() {
 	var sortby []string
 	var order []string
 	var query = make(map[string]string)
-	var limit int64 = 10
-	var offset int64
+	var pageSize int64 = 10
+	var currentPage int64
 
 	// fields: col1,col2,entity.col3
 	if v := c.GetString("fields"); v != "" {
 		fields = strings.Split(v, ",")
 	}
-	// limit: 10 (default is 10)
-	if v, err := c.GetInt64("limit"); err == nil {
-		limit = v
+	// pageSize: 10 (default is 10)
+	if v, err := c.GetInt64("pageSize"); err == nil {
+		pageSize = v
 	}
-	// offset: 0 (default is 0)
-	if v, err := c.GetInt64("offset"); err == nil {
-		offset = v
+	// currentPage: 0 (default is 0)
+	if v, err := c.GetInt64("pageNum"); err == nil {
+		currentPage = v
 	}
 	// sortby: col1,col2
 	if v := c.GetString("sortby"); v != "" {
@@ -121,7 +128,7 @@ func (c *ArticleController) GetAll() {
 		}
 	}
 
-	l, err := models.GetAllArticle(query, fields, sortby, order, offset, limit)
+	l, err := models.GetAllArticlePage(query, fields, sortby, order, (currentPage-1)*pageSize, pageSize)
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 	} else {

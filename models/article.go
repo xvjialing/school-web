@@ -3,11 +3,12 @@ package models
 import (
 	"errors"
 	"fmt"
+	"github.com/astaxie/beego/orm"
+	"math"
 	"reflect"
+	. "school-web/common"
 	"strings"
 	"time"
-
-	"github.com/astaxie/beego/orm"
 )
 
 type Article struct {
@@ -54,6 +55,19 @@ func ArticleToArticleFiles(article Article) (articleFiles *ArticleFiles, err err
 	articleFiles.FileIdList = files
 
 	return articleFiles, nil
+}
+
+func ArticalListToArticleFilsList(articleList []Article) (articleFileList *[]ArticleFiles, err error) {
+	var articleFilesLists []ArticleFiles
+
+	for _, v := range articleList {
+		articleFiles, err := ArticleToArticleFiles(v)
+		if err != nil {
+			return nil, err
+		}
+		articleFilesLists = append(articleFilesLists, *articleFiles)
+	}
+	return &articleFilesLists, nil
 }
 
 func (t *Article) TableName() string {
@@ -157,6 +171,102 @@ func GetAllArticle(query map[string]string, fields []string, sortby []string, or
 			}
 		}
 		return ml, nil
+	}
+	return nil, err
+}
+
+// GetAllArticle retrieves all Article matches certain condition. Returns empty list if
+// no records exist
+func GetAllArticlePage(query map[string]string, fields []string, sortby []string, order []string,
+	offset int64, limit int64) (articlePage *Page, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable(new(Article))
+	// query k=v
+	for k, v := range query {
+		// rewrite dot-notation to Object__Attribute
+		k = strings.Replace(k, ".", "__", -1)
+		if strings.Contains(k, "isnull") {
+			qs = qs.Filter(k, (v == "true" || v == "1"))
+		} else {
+			qs = qs.Filter(k, v)
+		}
+	}
+	// order by:
+	var sortFields []string
+	if len(sortby) != 0 {
+		if len(sortby) == len(order) {
+			// 1) for each sort field, there is an associated order
+			for i, v := range sortby {
+				orderby := ""
+				if order[i] == "desc" {
+					orderby = "-" + v
+				} else if order[i] == "asc" {
+					orderby = v
+				} else {
+					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
+				}
+				sortFields = append(sortFields, orderby)
+			}
+			qs = qs.OrderBy(sortFields...)
+		} else if len(sortby) != len(order) && len(order) == 1 {
+			// 2) there is exactly one order, all the sorted fields will be sorted by this order
+			for _, v := range sortby {
+				orderby := ""
+				if order[0] == "desc" {
+					orderby = "-" + v
+				} else if order[0] == "asc" {
+					orderby = v
+				} else {
+					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
+				}
+				sortFields = append(sortFields, orderby)
+			}
+		} else if len(sortby) != len(order) && len(order) != 1 {
+			return nil, errors.New("Error: 'sortby', 'order' sizes mismatch or 'order' size is not 1")
+		}
+	} else {
+		if len(order) != 0 {
+			return nil, errors.New("Error: unused 'order' fields")
+		}
+	}
+
+	page := new(Page)
+	var ml []interface{}
+	var l []Article
+	qs = qs.OrderBy(sortFields...)
+	if _, err = qs.Limit(limit, offset).All(&l, fields...); err == nil {
+
+		count, err := qs.Count()
+		if err != nil {
+			return nil, errors.New("Error: count error")
+		}
+		page.Total = count
+		page.Pages = int(math.Ceil((float64(count) / float64(limit))))
+		page.PageSize = limit
+		page.PageNum = offset
+
+		if len(fields) == 0 {
+			for _, v := range l {
+				ml = append(ml, v)
+			}
+		} else {
+			// trim unused fields
+			articleFileList, err := ArticalListToArticleFilsList(l)
+			if err != nil {
+				return nil, err
+			}
+			for _, v := range *articleFileList {
+				m := make(map[string]interface{})
+				val := reflect.ValueOf(v)
+				for _, fname := range fields {
+					m[fname] = val.FieldByName(fname).Interface()
+				}
+				ml = append(ml, m)
+			}
+		}
+
+		page.List = ml
+		return page, nil
 	}
 	return nil, err
 }
