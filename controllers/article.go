@@ -35,8 +35,9 @@ func (c *ArticleController) Post() {
 	var v models.Article
 
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
-		if _, err := models.AddArticle(&v); err == nil {
+		if id, err := models.AddArticle(&v); err == nil {
 			c.Ctx.Output.SetStatus(201)
+			v.Id = int(id)
 			articleFiles, err := models.ArticleToArticleFiles(v)
 			if err != nil {
 				c.Data["json"] = common.Failed(400, err.Error())
