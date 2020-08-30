@@ -179,11 +179,11 @@ paths:
         description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
-        name: limit
+        name: pageSize
         description: Limit the size of result set. Must be an integer
         type: string
       - in: query
-        name: offset
+        name: pageNum
         description: Start position of result set. Must be an integer
         type: string
       responses:
@@ -754,7 +754,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  1094.0xc000400750.false:
+  1094.0xc0003f8b40.false:
     title: "false"
     type: object
   common.Result:
@@ -765,7 +765,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/1094.0xc000400750.false'
+        $ref: '#/definitions/1094.0xc0003f8b40.false'
       msg:
         type: string
   models.Article:
