@@ -252,11 +252,7 @@ func GetAllArticlePage(query map[string]string, fields []string, sortby []string
 			}
 		} else {
 			// trim unused fields
-			articleFileList, err := ArticalListToArticleFilsList(l)
-			if err != nil {
-				return nil, err
-			}
-			for _, v := range *articleFileList {
+			for _, v := range l {
 				m := make(map[string]interface{})
 				val := reflect.ValueOf(v)
 				for _, fname := range fields {
@@ -266,7 +262,15 @@ func GetAllArticlePage(query map[string]string, fields []string, sortby []string
 			}
 		}
 
-		page.List = ml
+		var articleFileList []interface{}
+		for _, v := range ml {
+			articleFile, err := ArticleToArticleFiles(v.(Article))
+			if err != nil {
+				continue
+			}
+			articleFileList = append(articleFileList, *articleFile)
+		}
+		page.List = articleFileList
 		return page, nil
 	}
 	return nil, err

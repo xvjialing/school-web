@@ -66,10 +66,17 @@ func (c *ArticleController) GetOne() {
 	idStr := c.Ctx.Input.Param(":id")
 	id, _ := strconv.Atoi(idStr)
 	v, err := models.GetArticleById(id)
+
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 	} else {
-		c.Data["json"] = common.Succes(v)
+		articleFile, err := models.ArticleToArticleFiles(*v)
+		if err != nil {
+			c.Data["json"] = common.Failed(400, err.Error())
+		} else {
+			c.Data["json"] = common.Succes(articleFile)
+		}
+
 	}
 	c.ServeJSON()
 }
@@ -82,8 +89,8 @@ func (c *ArticleController) GetOne() {
 // @Param	fields	query	string	false	"Fields returned. e.g. col1,col2 ..."
 // @Param	sortby	query	string	false	"Sorted-by fields. e.g. col1,col2 ..."
 // @Param	order	query	string	false	"Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ..."
-// @Param	limit	query	string	false	"Limit the size of result set. Must be an integer"
-// @Param	offset	query	string	false	"Start position of result set. Must be an integer"
+// @Param	pageSize	query	string	false	"Limit the size of result set. Must be an integer"
+// @Param	pageNum	query	string	false	"Start position of result set. Must be an integer"
 // @Success 200 {object} models.Article
 // @Failure 403
 // @router / [get]
