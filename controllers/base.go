@@ -27,6 +27,10 @@ func (c *BaseController) Prepare() {
 	//	return
 	//}
 
+	if c.Ctx.Request.Method == "GET" {
+		return
+	}
+
 	access_token := c.Ctx.Input.Header("access_token")
 
 	if access_token == "" || len(access_token) == 0 {
