@@ -57,10 +57,10 @@ func (c *FileController) Post() {
 			c.ServeJSON()
 			return
 		}
-		fileName := uuid.New().String() + "_" + files[i].Filename
+		fileName := files[i].Filename
 
 		//创建目录
-		uploadDir := "static/upload/" + time.Now().Format("2006/01/02/")
+		uploadDir := "static/upload/" + time.Now().Format("2006/01/02/") + uuid.New().String() + "/"
 		err = os.MkdirAll(uploadDir, 0777)
 		if err != nil {
 			c.Data["json"] = common.Failed(400, err.Error())
