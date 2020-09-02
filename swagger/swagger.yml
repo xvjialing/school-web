@@ -37,7 +37,8 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: pageSize
@@ -176,7 +177,8 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: pageSize
@@ -209,6 +211,11 @@ paths:
         description: body for File content
         required: true
         type: file
+      - in: query
+        name: type
+        description: 文件类型
+        required: true
+        type: string
       responses:
         "201":
           description: '{int} models.File'
@@ -314,7 +321,8 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: pageSize
@@ -501,7 +509,8 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: pageSize
@@ -688,7 +697,8 @@ paths:
         type: string
       - in: query
         name: order
-        description: Order corresponding to each sortby field, if single value, apply to all sortby fields. e.g. desc,asc ...
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
         type: string
       - in: query
         name: limit
@@ -802,7 +812,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  1094.0xc0003f09c0.false:
+  1140.0xc00017af00.false:
     title: "false"
     type: object
   common.Result:
@@ -813,7 +823,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/1094.0xc0003f09c0.false'
+        $ref: '#/definitions/1140.0xc00017af00.false'
       msg:
         type: string
   models.Article:

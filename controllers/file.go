@@ -32,6 +32,7 @@ func (c *FileController) URLMapping() {
 // @Description create File
 // @Param	access_token	header	string	true	"access_token"
 // @Param	file		form 	file	true		"body for File content"
+// @Param   type    	query   string     true  "文件类型"
 // @Success 201 {int} models.File
 // @Failure 403 body is empty
 // @router / [post]
@@ -39,10 +40,18 @@ func (c *FileController) Post() {
 
 	var fileList []models.File
 
+	fileType, e := c.GetInt("type", 1)
+	if e != nil {
+		c.Data["json"] = common.Failed(400, e.Error())
+		c.ServeJSON()
+		return
+	}
+
 	files, err := c.GetFiles("file")
 	if err != nil {
 		c.Data["json"] = common.Failed(400, err.Error())
 		c.ServeJSON()
+		return
 	}
 
 	for i, _ := range files {
@@ -82,7 +91,7 @@ func (c *FileController) Post() {
 		modelFile := models.File{
 			CreateTime: time.Now(),
 			Path:       path,
-			Type:       1,
+			Type:       fileType,
 		}
 		fileList = append(fileList, modelFile)
 
