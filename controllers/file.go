@@ -40,12 +40,7 @@ func (c *FileController) Post() {
 
 	var fileList []models.File
 
-	fileType, e := c.GetInt("type", 1)
-	if e != nil {
-		c.Data["json"] = common.Failed(400, e.Error())
-		c.ServeJSON()
-		return
-	}
+	fileType := c.GetString("type", "1")
 
 	files, err := c.GetFiles("file")
 	if err != nil {

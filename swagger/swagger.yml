@@ -812,7 +812,7 @@ paths:
         "403":
           description: id is empty
 definitions:
-  1140.0xc00017af00.false:
+  1140.0xc000071f20.false:
     title: "false"
     type: object
   common.Result:
@@ -823,7 +823,7 @@ definitions:
         type: integer
         format: int64
       data:
-        $ref: '#/definitions/1140.0xc00017af00.false'
+        $ref: '#/definitions/1140.0xc000071f20.false'
       msg:
         type: string
   models.Article:
@@ -866,8 +866,7 @@ definitions:
         type: string
       Type:
         description: 文件类型
-        type: integer
-        format: int64
+        type: string
   models.Leader:
     title: Leader
     type: object

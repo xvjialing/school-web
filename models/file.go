@@ -15,7 +15,7 @@ type File struct {
 	Id         int       `orm:"column(id);auto"`
 	CreateTime time.Time `orm:"column(create_time);type(timestamp);auto_now_add" description:"创建时间"`
 	Path       string    `orm:"column(path);size(255)" description:"路径"`
-	Type       int       `orm:"column(type);null" description:"文件类型"`
+	Type       string    `orm:"column(type);size(255);null" description:"文件类型"`
 }
 
 func (t *File) TableName() string {
