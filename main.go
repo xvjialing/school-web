@@ -7,6 +7,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"net/http"
+	"school-web/filter"
 	_ "school-web/routers"
 	"school-web/service"
 )
@@ -33,6 +34,8 @@ var corsFunc = func(ctx *context.Context) {
 }
 
 func main() {
+
+	beego.InsertFilter("/*", beego.FinishRouter, filter.LogRequest, false)
 
 	beegoAppConfig := beego.AppConfig
 

@@ -27,6 +27,7 @@ func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail, redisAd
 	manager := manage.NewDefaultManager()
 	//manager.SetAuthorizeCodeExp(time.Hour * 24 * 12)
 	manager.SetPasswordTokenCfg(&manage.Config{AccessTokenExp: time.Hour * 24 * 1, RefreshTokenExp: time.Hour * 24 * 1, IsGenerateRefresh: true})
+	//manager.SetPasswordTokenCfg(&manage.Config{AccessTokenExp: time.Second * 24 * 1, RefreshTokenExp: time.Hour * 24 * 1, IsGenerateRefresh: true})
 
 	//manager.SetAuthorizeCodeTokenCfg(&manage.Config{AccessTokenExp: time.Hour * 24 * 12, RefreshTokenExp: time.Hour * 24 * 12, IsGenerateRefresh: true})
 
@@ -37,12 +38,12 @@ func InitOauth2Service(adminUserName, adminUserPassword, adminUserEmail, redisAd
 	//	mysql.NewConfig("root:Xjl1994920!@tcp(rm-wz9t41ublf3gmrv3e5o.mysql.rds.aliyuncs.com:3306)/go-admin?charset=utf8"),
 	//)
 	//manager.MapTokenStorage(tokenStore)
-
-	manager.MapTokenStorage(oredis.NewRedisStore(&redis.Options{
+	var err error
+	manager.MustTokenStorage(oredis.NewRedisStore(&redis.Options{
 		Addr:     redisAddr,
 		DB:       redisDB,
 		Password: redisPassword,
-	}))
+	}), err)
 
 	clientStore := store.NewClientStore()
 	clientID := "12345"
